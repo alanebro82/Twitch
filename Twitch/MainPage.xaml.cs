@@ -16,18 +16,6 @@ namespace Twitch
             SystemNavigationManager.GetForCurrentView().BackRequested += SystemNavigationManagerBackRequested;
         }
 
-        private void mChannelName_KeyDown( object sender, Windows.UI.Xaml.Input.KeyRoutedEventArgs e )
-        {
-            if( e.Key == Windows.System.VirtualKey.Enter )
-            {
-                e.Handled = true;
-                if( Vm.LaunchPlaylistCommand.CanExecute( mChannelName.Text ) )
-                {
-                    Vm.LaunchPlaylistCommand.Execute( mChannelName.Text );
-                }
-            }
-        }
-
         private void SystemNavigationManagerBackRequested( object sender, BackRequestedEventArgs e )
         {
             if( Frame.CanGoBack )

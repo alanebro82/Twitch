@@ -22,7 +22,6 @@ namespace Twitch.ViewModel
             mNavService = aNavService;
             mTwitchQueryService = aTwitchQueryService;
 
-            LaunchPlaylistCommand = new RelayCommand<string>( async ( aChannel ) => await LaunchPlaylist( aChannel ), ( aChannel ) => !IsLaunchingPlaylist );
             GetGamesListCommand = new RelayCommand( async () => await GetGamesList() );
             SelectGameCommand = new RelayCommand<Game>( SelectGame );
         }
@@ -30,20 +29,6 @@ namespace Twitch.ViewModel
         //----------------------------------------------------------------------
         // PRIVATE METHODS
         //----------------------------------------------------------------------
-
-        private async Task LaunchPlaylist( string aChannel )
-        {
-            try
-            {
-                IsLaunchingPlaylist = true;
-
-                await mTwitchQueryService.LaunchChannel( aChannel );
-            }
-            finally
-            {
-                IsLaunchingPlaylist = false;
-            }
-        }
 
         private async Task GetGamesList()
         {
@@ -69,30 +54,12 @@ namespace Twitch.ViewModel
         // PUBLIC COMMANDS
         //----------------------------------------------------------------------
 
-        public RelayCommand<string> LaunchPlaylistCommand { get; }
         public RelayCommand GetGamesListCommand { get; }
         public RelayCommand<Game> SelectGameCommand { get; }
 
         //----------------------------------------------------------------------
         // PUBLIC PROPERTIES
         //----------------------------------------------------------------------
-
-        private bool IsLaunchingPlaylist
-        {
-            get
-            {
-                return mIsLaunchingPlaylist;
-            }
-            set
-            {
-                if( mIsLaunchingPlaylist != value )
-                {
-                    mIsLaunchingPlaylist = value;
-                    LaunchPlaylistCommand.RaiseCanExecuteChanged();
-                }
-            }
-        }
-        private bool mIsLaunchingPlaylist = false;
 
         public IEnumerable<Game> Games
         {

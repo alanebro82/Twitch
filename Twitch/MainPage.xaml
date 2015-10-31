@@ -12,25 +12,15 @@
     <Grid  Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <TextBox Name="mChannelName"
-                 Grid.Row="0"
-                 KeyDown="mChannelName_KeyDown" />
-        <Button Grid.Row="1"
-                Command="{Binding LaunchPlaylistCommand}"
-                CommandParameter="{Binding ElementName=mChannelName, Path=Text}">
-            Launch
-        </Button>
-        <Button Grid.Row="2"
+        <Button Grid.Row="0"
                 Command="{Binding GetGamesListCommand}">
             Get Games
         </Button>
 
-        <GridView Grid.Row="3"
+        <GridView Grid.Row="1"
                   ItemsSource="{Binding Games}"
                   SelectionMode="None"
                   IsItemClickEnabled="True"
