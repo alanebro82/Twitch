@@ -28,7 +28,11 @@
             Get Games
         </Button>
 
-        <GridView Grid.Row="3" ItemsSource="{Binding Games}">
+        <GridView Grid.Row="3"
+                  ItemsSource="{Binding Games}"
+                  SelectionMode="None"
+                  IsItemClickEnabled="True"
+                  ItemClick="GridView_ItemClick">
             <GridView.ItemTemplate>
                 <DataTemplate>
                     <Grid Margin="10">

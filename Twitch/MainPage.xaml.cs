@@ -1,4 +1,5 @@
-﻿using Twitch.ViewModel;
+﻿using Twitch.Model;
+using Twitch.ViewModel;
 using Windows.UI.Core;
 using Windows.UI.Xaml.Navigation;
 
@@ -50,6 +51,13 @@ namespace Twitch
             base.OnNavigatingFrom( e );
         }
 
-
+        private void GridView_ItemClick(object sender, Windows.UI.Xaml.Controls.ItemClickEventArgs e)
+        {
+            var theGame = e.ClickedItem as Game;
+            if (Vm.SelectGameCommand.CanExecute(theGame))
+            {
+                Vm.SelectGameCommand.Execute(theGame);
+            }
+        }
     }
 }

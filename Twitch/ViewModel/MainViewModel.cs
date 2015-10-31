@@ -1,10 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Command;
+using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
-using GalaSoft.MvvmLight;
-using GalaSoft.MvvmLight.Command;
 using Twitch.Model;
 using Twitch.Services;
+using Windows.UI.Popups;
 
 namespace Twitch.ViewModel
 {
@@ -22,6 +24,7 @@ namespace Twitch.ViewModel
 
             LaunchPlaylistCommand = new RelayCommand<string>( async ( aChannel ) => await LaunchPlaylist( aChannel ), ( aChannel ) => !IsLaunchingPlaylist );
             GetGamesListCommand = new RelayCommand( async () => await GetGamesList() );
+            SelectGameCommand = new RelayCommand<Game>( SelectGame );
         }
 
         //----------------------------------------------------------------------
@@ -52,12 +55,28 @@ namespace Twitch.ViewModel
             }
         }
 
+        private async void SelectGame(Game aGame)
+        {
+            if (aGame == null)
+            {
+                return;
+            }
+
+            // TODO: Real navigation
+            var theMessageDialog = new MessageDialog($"You selected {aGame.Name}.");
+            theMessageDialog.Commands.Add(new Windows.UI.Popups.UICommand("Ok") { Id = 0 });
+            theMessageDialog.CancelCommandIndex = 0;
+            theMessageDialog.DefaultCommandIndex = 0;
+            await theMessageDialog.ShowAsync();
+        }
+
         //----------------------------------------------------------------------
         // PUBLIC COMMANDS
         //----------------------------------------------------------------------
 
         public RelayCommand<string> LaunchPlaylistCommand{ get; }
         public RelayCommand GetGamesListCommand{ get; }
+        public RelayCommand<Game> SelectGameCommand { get; }
 
         //----------------------------------------------------------------------
         // PUBLIC PROPERTIES

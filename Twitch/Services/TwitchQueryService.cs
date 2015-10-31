@@ -80,7 +80,7 @@ namespace Twitch.Services
 
         private Uri GamesListUri()
         {
-            return new Uri( "https://api.twitch.tv/kraken/games/top" );
+            return new Uri( "https://api.twitch.tv/kraken/games/top?limit=25" );
         }
 
         private Uri TokenRequestUri( string aChannelName )
