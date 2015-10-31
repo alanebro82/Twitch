@@ -1,0 +1,49 @@
+﻿<Page xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+      xmlns:core="using:Microsoft.Xaml.Interactions.Core"
+      xmlns:model="using:Twitch.Model"
+      x:Class="Twitch.MainPage"
+      mc:Ignorable="d"
+      DataContext="{Binding Main, Source={StaticResource Locator}}">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        
+        <TextBox Name="mChannelName" Grid.Row="0" />
+        <Button Grid.Row="1"
+                Command="{Binding LaunchPlaylistCommand}"
+                CommandParameter="{Binding ElementName=mChannelName, Path=Text}">
+            Launch
+        </Button>
+        <Button Grid.Row="2"
+                Command="{Binding GetGamesListCommand}">
+            Get Games
+        </Button>
+
+        <GridView Grid.Row="3" ItemsSource="{Binding Games}">
+            <GridView.ItemTemplate>
+                <DataTemplate>
+                    <Grid Margin="10">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Image Grid.Row="0" Source="{Binding ImageUrl}" Stretch="None"/>
+                        <TextBlock Grid.Row="1" Text="{Binding Name}" />
+                        <TextBlock Grid.Row="2" Text="{Binding Viewers}" />
+                    </Grid>
+                </DataTemplate>
+            </GridView.ItemTemplate>
+        </GridView>
+        
+    </Grid>
+</Page>
