@@ -23,22 +23,19 @@ namespace Twitch.Services
                 using( var theGamesListStream = theGamesListResponse.Content )
                 {
                     return new GameSearchResults( JsonObject.Parse( await theGamesListStream.ReadAsStringAsync() ) );
-
-                    //using( var thePlaylistResponse = await new HttpClient().GetAsync( StreamRequestUri( theAccessToken.Token.Channel, theTokenJson, theAccessToken.Signature ) ) )
-                    //{
-                    //    using( var thePlaylistStream = thePlaylistResponse.Content )
-                    //    {
-                    //        var thePath = await SaveStringToFile( $"{aChannelName}.m3u8", await thePlaylistStream.ReadAsBufferAsync() );
-                    //        await Launcher.LaunchFileAsync( thePath );
-                    //    }
-                    //}
                 }
             }
         }
 
-        public Task GetChannels( string aGame )
+        public async Task<StreamSearchResults> GetChannels( string aGame )
         {
-            return Task.FromResult( 0 );
+            using( var theChannelsListResponse = await new HttpClient().GetAsync( StreamSearchUri( aGame ) ) )
+            {
+                using( var theChannelsListStream = theChannelsListResponse.Content )
+                {
+                    return new StreamSearchResults( JsonObject.Parse( await theChannelsListStream.ReadAsStringAsync() ) );
+                }
+            }
         }
 
         public async Task LaunchChannel( string aChannelName )
@@ -80,17 +77,22 @@ namespace Twitch.Services
 
         private Uri GamesListUri()
         {
-            return new Uri( "https://api.twitch.tv/kraken/games/top?limit=25" );
+            return new Uri("https://api.twitch.tv/kraken/games/top?limit=10");
         }
 
-        private Uri TokenRequestUri( string aChannelName )
+        private Uri StreamSearchUri(string aChannelName)
         {
-            return new Uri( $"http://api.twitch.tv/api/channels/{aChannelName}/access_token" );
+            return new Uri($"https://api.twitch.tv/kraken/search/streams?hls=true&q={aChannelName}&limit=10");
         }
 
-        private Uri StreamRequestUri( string aChannelName, JsonObject aToken, string aSignature )
+        private Uri TokenRequestUri(string aChannelName)
         {
-            return new Uri( $"http://usher.twitch.tv/api/channel/hls/{aChannelName}.m3u8?player=twitchweb&&token={aToken.Stringify()}&sig={aSignature}&allow_audio_only=true&allow_source=true&type=any&p=8941" );
+            return new Uri($"http://api.twitch.tv/api/channels/{aChannelName}/access_token");
+        }
+
+        private Uri StreamRequestUri(string aChannelName, JsonObject aToken, string aSignature)
+        {
+            return new Uri($"http://usher.twitch.tv/api/channel/hls/{aChannelName}.m3u8?player=twitchweb&&token={aToken.Stringify()}&sig={aSignature}&allow_audio_only=true&allow_source=true&type=any&p=8941");
         }
 
     }

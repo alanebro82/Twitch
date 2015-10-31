@@ -55,16 +55,17 @@ namespace Twitch.ViewModel
             }
         }
 
-        private async void SelectGame(Game aGame)
+        private async void SelectGame( Game aGame )
         {
-            if (aGame == null)
+            if( aGame == null )
             {
                 return;
             }
 
+            var theChannels = await mTwitchQueryService.GetChannels( aGame.Name );
             // TODO: Real navigation
-            var theMessageDialog = new MessageDialog($"You selected {aGame.Name}.");
-            theMessageDialog.Commands.Add(new Windows.UI.Popups.UICommand("Ok") { Id = 0 });
+            var theMessageDialog = new MessageDialog( $"You selected {aGame.Name}." );
+            theMessageDialog.Commands.Add( new Windows.UI.Popups.UICommand( "Ok" ) { Id = 0 } );
             theMessageDialog.CancelCommandIndex = 0;
             theMessageDialog.DefaultCommandIndex = 0;
             await theMessageDialog.ShowAsync();
@@ -74,8 +75,8 @@ namespace Twitch.ViewModel
         // PUBLIC COMMANDS
         //----------------------------------------------------------------------
 
-        public RelayCommand<string> LaunchPlaylistCommand{ get; }
-        public RelayCommand GetGamesListCommand{ get; }
+        public RelayCommand<string> LaunchPlaylistCommand { get; }
+        public RelayCommand GetGamesListCommand { get; }
         public RelayCommand<Game> SelectGameCommand { get; }
 
         //----------------------------------------------------------------------

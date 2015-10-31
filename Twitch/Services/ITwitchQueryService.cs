@@ -6,7 +6,7 @@ namespace Twitch.Services
     public interface ITwitchQueryService
     {
         Task<GameSearchResults> GetGames();
-        Task GetChannels( string aGame );
+        Task<StreamSearchResults> GetChannels( string aGame );
         Task LaunchChannel( string aChannelName );
     }
 }
