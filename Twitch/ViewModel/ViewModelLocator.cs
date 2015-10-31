@@ -1,8 +1,6 @@
-﻿using GalaSoft.MvvmLight;
-using GalaSoft.MvvmLight.Ioc;
+﻿using GalaSoft.MvvmLight.Ioc;
 using GalaSoft.MvvmLight.Views;
 using Microsoft.Practices.ServiceLocation;
-using Twitch.Model;
 using Twitch.Services;
 
 namespace Twitch.ViewModel
@@ -15,14 +13,26 @@ namespace Twitch.ViewModel
         {
             ServiceLocator.SetLocatorProvider( () => SimpleIoc.Default );
 
-            var nav = new NavigationService();
-            nav.Configure( SecondPageKey, typeof( SecondPage ) );
-            SimpleIoc.Default.Register<INavigationService>( () => nav );
+            SetUpNavigation();
+            SetUpServices();
+            SetUpViewModels();
+        }
 
+        private static void SetUpNavigation()
+        {
+            var theNav = new NavigationService();
+            theNav.Configure( SecondPageKey, typeof( SecondPage ) );
+            SimpleIoc.Default.Register<INavigationService>( () => theNav );
+        }
+
+        private static void SetUpServices()
+        {
             SimpleIoc.Default.Register<IDialogService, DialogService>();
-
             SimpleIoc.Default.Register<ITwitchQueryService, TwitchQueryService>();
+        }
 
+        private static void SetUpViewModels()
+        {
             SimpleIoc.Default.Register<MainViewModel>();
         }
 
