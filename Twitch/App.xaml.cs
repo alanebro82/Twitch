@@ -1,11 +1,10 @@
 ﻿using System;
+using GalaSoft.MvvmLight.Threading;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
-using GalaSoft.MvvmLight.Messaging;
-using GalaSoft.MvvmLight.Threading;
 
 namespace Twitch
 {
@@ -24,15 +23,7 @@ namespace Twitch
         /// <param name="e">Details about the launch request and process.</param>
         protected override void OnLaunched( LaunchActivatedEventArgs e )
         {
-
-#if DEBUG
-            if (System.Diagnostics.Debugger.IsAttached)
-            {
-                DebugSettings.EnableFrameRateCounter = true;
-            }
-#endif
-
-            Frame rootFrame = Window.Current.Content as Frame;
+            var rootFrame = Window.Current.Content as Frame;
 
             // Do not repeat app initialization when the Window already has content,
             // just ensure that the window is active
@@ -62,15 +53,6 @@ namespace Twitch
             // Ensure the current window is active
             Window.Current.Activate();
             DispatcherHelper.Initialize();
-
-            Messenger.Default.Register<NotificationMessageAction<string>>(
-                this,
-                HandleNotificationMessage );
-        }
-
-        private void HandleNotificationMessage( NotificationMessageAction<string> message )
-        {
-            message.Execute( "Success (from App.xaml.cs)!" );
         }
 
         /// <summary>

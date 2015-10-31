@@ -16,7 +16,7 @@ namespace Twitch
             SystemNavigationManager.GetForCurrentView().BackRequested += SystemNavigationManagerBackRequested;
         }
 
-        private void MainPage_KeyDown( object sender, Windows.UI.Xaml.Input.KeyRoutedEventArgs e )
+        private void mChannelName_KeyDown( object sender, Windows.UI.Xaml.Input.KeyRoutedEventArgs e )
         {
             if( e.Key == Windows.System.VirtualKey.Enter )
             {
@@ -40,14 +40,10 @@ namespace Twitch
         protected override void OnNavigatedTo( NavigationEventArgs e )
         {
             base.OnNavigatedTo( e );
-
-            this.KeyDown += MainPage_KeyDown;
         }
 
         protected override void OnNavigatingFrom( NavigatingCancelEventArgs e )
         {
-            this.KeyDown -= MainPage_KeyDown;
-
             base.OnNavigatingFrom( e );
         }
 
@@ -59,5 +55,6 @@ namespace Twitch
                 Vm.SelectGameCommand.Execute(theGame);
             }
         }
+
     }
 }

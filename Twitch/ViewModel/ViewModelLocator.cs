@@ -2,12 +2,14 @@
 using GalaSoft.MvvmLight.Views;
 using Microsoft.Practices.ServiceLocation;
 using Twitch.Services;
+using Twitch.View;
 
 namespace Twitch.ViewModel
 {
     public class ViewModelLocator
     {
-        public const string SecondPageKey = "SecondPage";
+        public const string scStreamResultsPageKey = "StreamResultsPage";
+
 
         static ViewModelLocator()
         {
@@ -21,7 +23,7 @@ namespace Twitch.ViewModel
         private static void SetUpNavigation()
         {
             var theNav = new NavigationService();
-            theNav.Configure( SecondPageKey, typeof( SecondPage ) );
+            theNav.Configure( scStreamResultsPageKey, typeof( StreamResultsPage ) );
             SimpleIoc.Default.Register<INavigationService>( () => theNav );
         }
 
@@ -34,11 +36,17 @@ namespace Twitch.ViewModel
         private static void SetUpViewModels()
         {
             SimpleIoc.Default.Register<MainViewModel>();
+            SimpleIoc.Default.Register<StreamResultsViewModel>();
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Performance",
             "CA1822:MarkMembersAsStatic",
             Justification = "This non-static member is needed for data binding purposes." )]
         public MainViewModel Main => ServiceLocator.Current.GetInstance<MainViewModel>();
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Performance",
+    "CA1822:MarkMembersAsStatic",
+    Justification = "This non-static member is needed for data binding purposes." )]
+        public StreamResultsViewModel StreamResults => ServiceLocator.Current.GetInstance<StreamResultsViewModel>();
     }
 }

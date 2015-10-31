@@ -1,12 +1,11 @@
-﻿using GalaSoft.MvvmLight;
-using GalaSoft.MvvmLight.Command;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
+using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.Views;
 using Twitch.Model;
 using Twitch.Services;
-using Windows.UI.Popups;
 
 namespace Twitch.ViewModel
 {
@@ -18,8 +17,9 @@ namespace Twitch.ViewModel
         // PUBLIC METHODS
         //----------------------------------------------------------------------
 
-        public MainViewModel( ITwitchQueryService aTwitchQueryService )
+        public MainViewModel( INavigationService aNavService, ITwitchQueryService aTwitchQueryService )
         {
+            mNavService = aNavService;
             mTwitchQueryService = aTwitchQueryService;
 
             LaunchPlaylistCommand = new RelayCommand<string>( async ( aChannel ) => await LaunchPlaylist( aChannel ), ( aChannel ) => !IsLaunchingPlaylist );
@@ -55,20 +55,14 @@ namespace Twitch.ViewModel
             }
         }
 
-        private async void SelectGame( Game aGame )
+        private void SelectGame( Game aGame )
         {
             if( aGame == null )
             {
                 return;
             }
 
-            var theChannels = await mTwitchQueryService.GetChannels( aGame.Name );
-            // TODO: Real navigation
-            var theMessageDialog = new MessageDialog( $"You selected {aGame.Name}." );
-            theMessageDialog.Commands.Add( new Windows.UI.Popups.UICommand( "Ok" ) { Id = 0 } );
-            theMessageDialog.CancelCommandIndex = 0;
-            theMessageDialog.DefaultCommandIndex = 0;
-            await theMessageDialog.ShowAsync();
+            mNavService.NavigateTo( ViewModelLocator.scStreamResultsPageKey, aGame );
         }
 
         //----------------------------------------------------------------------
@@ -91,8 +85,9 @@ namespace Twitch.ViewModel
             }
             set
             {
-                if( Set( nameof( IsLaunchingPlaylist ), ref mIsLaunchingPlaylist, value ) )
+                if( mIsLaunchingPlaylist != value )
                 {
+                    mIsLaunchingPlaylist = value;
                     LaunchPlaylistCommand.RaiseCanExecuteChanged();
                 }
             }
@@ -113,6 +108,6 @@ namespace Twitch.ViewModel
         //----------------------------------------------------------------------
 
         private readonly ITwitchQueryService mTwitchQueryService;
-
+        private readonly INavigationService mNavService;
     }
 }
