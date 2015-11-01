@@ -7,6 +7,6 @@ namespace Twitch.Services
     {
         Task<GameSearchResults> GetGames();
         Task<StreamSearchResults> GetChannels( string aGame );
-        Task LaunchChannel( string aChannelName );
+        Task<string> GetChannel( string aChannelName );
     }
 }

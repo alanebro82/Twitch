@@ -9,6 +9,7 @@ namespace Twitch.ViewModel
     public class ViewModelLocator
     {
         public const string scStreamResultsPageKey = "StreamResultsPage";
+        public const string scPlayerPageKey = "PlayerPage";
 
 
         static ViewModelLocator()
@@ -24,6 +25,7 @@ namespace Twitch.ViewModel
         {
             var theNav = new NavigationService();
             theNav.Configure( scStreamResultsPageKey, typeof( StreamResultsPage ) );
+            theNav.Configure( scPlayerPageKey, typeof( PlayerPage ) );
             SimpleIoc.Default.Register<INavigationService>( () => theNav );
         }
 
@@ -35,18 +37,13 @@ namespace Twitch.ViewModel
 
         private static void SetUpViewModels()
         {
+            SimpleIoc.Default.Register<PlayerViewModel>();
             SimpleIoc.Default.Register<MainViewModel>();
             SimpleIoc.Default.Register<StreamResultsViewModel>();
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Performance",
-            "CA1822:MarkMembersAsStatic",
-            Justification = "This non-static member is needed for data binding purposes." )]
+        public PlayerViewModel Player => ServiceLocator.Current.GetInstance<PlayerViewModel>();
         public MainViewModel Main => ServiceLocator.Current.GetInstance<MainViewModel>();
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Performance",
-    "CA1822:MarkMembersAsStatic",
-    Justification = "This non-static member is needed for data binding purposes." )]
         public StreamResultsViewModel StreamResults => ServiceLocator.Current.GetInstance<StreamResultsViewModel>();
     }
 }

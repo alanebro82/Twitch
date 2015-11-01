@@ -10,18 +10,8 @@
       DataContext="{Binding Main, Source={StaticResource Locator}}">
 
     <Grid  Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
 
-        <Button Grid.Row="0"
-                Command="{Binding GetGamesListCommand}">
-            Get Games
-        </Button>
-
-        <GridView Grid.Row="1"
-                  ItemsSource="{Binding Games}"
+        <GridView ItemsSource="{Binding Games}"
                   SelectionMode="None"
                   IsItemClickEnabled="True"
                   ItemClick="GridView_ItemClick">

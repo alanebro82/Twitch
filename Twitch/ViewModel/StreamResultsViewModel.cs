@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.Views;
 using Twitch.Model;
 using Twitch.Services;
 
@@ -11,16 +12,25 @@ namespace Twitch.ViewModel
     public class StreamResultsViewModel : ViewModelBase
     {
 
-        public StreamResultsViewModel( ITwitchQueryService aTwitchQueryService )
+        public StreamResultsViewModel( INavigationService aNavService, ITwitchQueryService aTwitchQueryService )
         {
+            mNavService = aNavService;
             mTwitchQueryService = aTwitchQueryService;
-            InitCommand = new RelayCommand<Game>( async ( aGame ) => await Init( aGame ) );
-            SelectStreamCommand = new RelayCommand<Stream>( async ( aStream ) => await SelectStream( aStream ) );
+            SelectStreamCommand = new RelayCommand<Stream>( SelectStream );
         }
 
-        private async Task Init(Game aGame)
+        public async Task Init(Game aGame)
         {
-            var theChannels = await mTwitchQueryService.GetChannels( aGame.Name );
+            Game = aGame;
+            if( Game == null )
+            {
+                mNavService.GoBack();
+                return;
+            }
+
+            mStreams.Clear();
+
+            var theChannels = await mTwitchQueryService.GetChannels( Game.Name );
 
             foreach( var theStream in theChannels.StreamsList )
             {
@@ -28,9 +38,14 @@ namespace Twitch.ViewModel
             }
         }
 
-        private async Task SelectStream( Stream aStream )
+        private void SelectStream( Stream aStream )
         {
-            await mTwitchQueryService.LaunchChannel( aStream.Channel.Name );
+            if( aStream == null )
+            {
+                return;
+            }
+
+            mNavService.NavigateTo( ViewModelLocator.scPlayerPageKey, aStream );
         }
 
         //----------------------------------------------------------------------
@@ -73,6 +88,7 @@ namespace Twitch.ViewModel
         // PRIVATE FIELDS
         //----------------------------------------------------------------------
 
+        private readonly INavigationService mNavService;
         private readonly ITwitchQueryService mTwitchQueryService;
     }
 }

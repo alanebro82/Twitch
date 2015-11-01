@@ -22,16 +22,11 @@ namespace Twitch.ViewModel
             mNavService = aNavService;
             mTwitchQueryService = aTwitchQueryService;
 
-            GetGamesListCommand = new RelayCommand( async () => await GetGamesList() );
             SelectGameCommand = new RelayCommand<Game>( SelectGame );
         }
-
-        //----------------------------------------------------------------------
-        // PRIVATE METHODS
-        //----------------------------------------------------------------------
-
-        private async Task GetGamesList()
+        public async Task Init()
         {
+            mGames.Clear();
             var theGameResults = await mTwitchQueryService.GetGames();
 
             foreach( var theGame in theGameResults.GamesList )
@@ -39,6 +34,10 @@ namespace Twitch.ViewModel
                 mGames.Add( theGame );
             }
         }
+
+        //----------------------------------------------------------------------
+        // PRIVATE METHODS
+        //----------------------------------------------------------------------
 
         private void SelectGame( Game aGame )
         {
@@ -54,7 +53,6 @@ namespace Twitch.ViewModel
         // PUBLIC COMMANDS
         //----------------------------------------------------------------------
 
-        public RelayCommand GetGamesListCommand { get; }
         public RelayCommand<Game> SelectGameCommand { get; }
 
         //----------------------------------------------------------------------
@@ -74,7 +72,7 @@ namespace Twitch.ViewModel
         // PRIVATE FIELDS
         //----------------------------------------------------------------------
 
-        private readonly ITwitchQueryService mTwitchQueryService;
         private readonly INavigationService mNavService;
+        private readonly ITwitchQueryService mTwitchQueryService;
     }
 }
