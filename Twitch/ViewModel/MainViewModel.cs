@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
@@ -23,16 +23,13 @@ namespace Twitch.ViewModel
             mTwitchQueryService = aTwitchQueryService;
 
             SelectGameCommand = new RelayCommand<Game>( SelectGame );
-        }
-        public async Task Init()
-        {
-            mGames.Clear();
-            var theGameResults = await mTwitchQueryService.GetGames();
 
-            foreach( var theGame in theGameResults.GamesList )
-            {
-                mGames.Add( theGame );
-            }
+            mGames = new IncrementalLoadingCollection<GameSource, Game>( 10, GetGames );
+        }
+
+        public async Task<IEnumerable<Game>> GetGames( uint aOffset, uint aSize )
+        {
+            return ( await mTwitchQueryService.GetGames( aOffset, aSize ) ).GamesList;
         }
 
         //----------------------------------------------------------------------
@@ -59,14 +56,14 @@ namespace Twitch.ViewModel
         // PUBLIC PROPERTIES
         //----------------------------------------------------------------------
 
-        public IEnumerable<Game> Games
+        public IncrementalLoadingCollection<GameSource, Game> Games
         {
             get
             {
                 return mGames;
             }
         }
-        private ObservableCollection<Game> mGames = new ObservableCollection<Game>();
+        private IncrementalLoadingCollection<GameSource, Game> mGames;
 
         //----------------------------------------------------------------------
         // PRIVATE FIELDS
@@ -74,5 +71,15 @@ namespace Twitch.ViewModel
 
         private readonly INavigationService mNavService;
         private readonly ITwitchQueryService mTwitchQueryService;
+    }
+
+    public class GameSource : IIncrementalSource<Game>
+    {
+        private List<Game> mGames = new List<Game>();
+
+        public IEnumerable<Game> GetPagedItems( int pageIndex, int pageSize )
+        {
+            return mGames.Skip( pageIndex * pageSize ).Take( pageSize );
+        }
     }
 }

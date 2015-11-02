@@ -12,7 +12,6 @@ namespace Twitch
         public MainPage()
         {
             InitializeComponent();
-
             SystemNavigationManager.GetForCurrentView().BackRequested += SystemNavigationManagerBackRequested;
         }
 
@@ -25,11 +24,9 @@ namespace Twitch
             }
         }
 
-        protected override async void OnNavigatedTo( NavigationEventArgs e )
+        protected override void OnNavigatedTo( NavigationEventArgs e )
         {
             base.OnNavigatedTo( e );
-
-            await Vm.Init();
         }
 
         protected override void OnNavigatingFrom( NavigatingCancelEventArgs e )
@@ -45,6 +42,5 @@ namespace Twitch
                 Vm.SelectGameCommand.Execute(theGame);
             }
         }
-
     }
 }

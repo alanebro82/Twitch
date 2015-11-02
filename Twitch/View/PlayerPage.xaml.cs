@@ -82,7 +82,7 @@ namespace Twitch.View
             {
                 ApplicationView.GetForCurrentView().ExitFullScreenMode();
             }
-    }
+        }
 
         private void Page_KeyDown( object sender, Windows.UI.Xaml.Input.KeyRoutedEventArgs e )
         {

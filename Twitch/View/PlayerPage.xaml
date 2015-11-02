@@ -33,7 +33,6 @@
                            IsFullScreenChanged="mMediaElement_IsFullScreenChanged"
                            IsPauseEnabled="False"
                            IsPlayPauseVisible="False"
-                           RealTimePlayback="True"
                            DoubleTapped="mMediaElement_DoubleTapped"
                            Source="{Binding SelectedStreamLocation.Uri}" />
 

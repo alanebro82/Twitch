@@ -15,9 +15,9 @@ namespace Twitch.Services
         // PUBLIC ITwitchQueryService
         //----------------------------------------------------------------------
 
-        public async Task<GameSearchResults> GetGames()
+        public async Task<GameSearchResults> GetGames( uint aOffset, uint aSize )
         {
-            using( var theGamesListResponse = await new HttpClient().GetAsync( GamesListUri() ) )
+            using( var theGamesListResponse = await new HttpClient().GetAsync( GamesListUri( aOffset, aSize ) ) )
             {
                 using( var theGamesListStream = theGamesListResponse.Content )
                 {
@@ -73,9 +73,9 @@ namespace Twitch.Services
             return theFile;
         }
 
-        private Uri GamesListUri()
+        private Uri GamesListUri( uint aOffset, uint aSize )
         {
-            return new Uri( "https://api.twitch.tv/kraken/games/top?limit=10" );
+            return new Uri( $"https://api.twitch.tv/kraken/games/top?offset={aOffset}&limit={aSize}" );
         }
 
         private Uri StreamsListUri( string aGameName )

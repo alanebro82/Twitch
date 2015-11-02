@@ -11,10 +11,14 @@
 
     <Grid  Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-        <GridView ItemsSource="{Binding Games}"
+        <GridView x:Name="mGamesGridView"
+                  ItemsSource="{Binding Games}"
+                  DataFetchSize="10"
+                  IncrementalLoadingTrigger="Edge"
                   SelectionMode="None"
                   IsItemClickEnabled="True"
-                  ItemClick="GridView_ItemClick">
+                  ItemClick="GridView_ItemClick"  >
+            <!-- TODO: DataFetchSize, etc-->
             <GridView.ItemTemplate>
                 <DataTemplate>
                     <Grid Margin="10">
