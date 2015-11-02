@@ -19,8 +19,7 @@ namespace Twitch.ViewModel
 
         public async Task Init( Stream aStream )
         {
-            Stream = aStream;
-            if( Stream == null )
+            if( aStream == null )
             {
                 mNavService.GoBack();
                 return;
@@ -28,7 +27,7 @@ namespace Twitch.ViewModel
 
             mStreamLocationList.Clear();
 
-            var theM3uStreams = M3uStream.ParseM3uStreams( await mTwitchQueryService.GetChannel( Stream.Channel.Name ) );
+            var theM3uStreams = M3uStream.ParseM3uStreams( await mTwitchQueryService.GetChannel( aStream.Channel.Name ) );
             foreach( var theM3uStream in theM3uStreams )
             {
                 mStreamLocationList.Add( theM3uStream );
@@ -36,18 +35,12 @@ namespace Twitch.ViewModel
             SelectedStreamLocation = StreamLocationList.FirstOrDefault();
         }
 
-        public Stream Stream
+        public override void Cleanup()
         {
-            get
-            {
-                return mStream;
-            }
-            set
-            {
-                Set( nameof( Stream ), ref mStream, value );
-            }
+            mSelectedStreamLocation = null;
+            mStreamLocationList.Clear();
+            base.Cleanup();
         }
-        private Stream mStream;
 
         public IEnumerable<M3uStream> StreamLocationList
         {

@@ -33,7 +33,11 @@
                            IsFullScreenChanged="mMediaElement_IsFullScreenChanged"
                            IsPauseEnabled="False"
                            IsPlayPauseVisible="False"
+                           InteractiveActivationMode="All"
+                           InteractiveDeactivationMode="All"
+                           AutoHideInterval="00:00:00.5"
                            DoubleTapped="mMediaElement_DoubleTapped"
+                           
                            Source="{Binding SelectedStreamLocation.Uri}" />
 
         <!-- Stream Selection -->

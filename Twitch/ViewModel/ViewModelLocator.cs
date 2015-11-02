@@ -37,8 +37,8 @@ namespace Twitch.ViewModel
 
         private static void SetUpViewModels()
         {
-            SimpleIoc.Default.Register<PlayerViewModel>();
             SimpleIoc.Default.Register<MainViewModel>();
+            SimpleIoc.Default.Register<PlayerViewModel>();
             SimpleIoc.Default.Register<StreamResultsViewModel>();
         }
 
