@@ -27,7 +27,7 @@ namespace Twitch.ViewModel
 
         public void Init()
         {
-            mGames = new IncrementalLoadingCollection<GameSource, Game>( 10, GetGames );
+            mGames = new IncrementalLoadingCollection<Game>( GetGames );
             RaisePropertyChanged( nameof( Games ) );
         }
 
@@ -66,14 +66,14 @@ namespace Twitch.ViewModel
         // PUBLIC PROPERTIES
         //----------------------------------------------------------------------
 
-        public IncrementalLoadingCollection<GameSource, Game> Games
+        public IncrementalLoadingCollection<Game> Games
         {
             get
             {
                 return mGames;
             }
         }
-        private IncrementalLoadingCollection<GameSource, Game> mGames;
+        private IncrementalLoadingCollection<Game> mGames;
 
         //----------------------------------------------------------------------
         // PRIVATE FIELDS
@@ -83,13 +83,4 @@ namespace Twitch.ViewModel
         private readonly ITwitchQueryService mTwitchQueryService;
     }
 
-    public class GameSource : IIncrementalSource<Game>
-    {
-        private List<Game> mGames = new List<Game>();
-
-        public IEnumerable<Game> GetPagedItems( int pageIndex, int pageSize )
-        {
-            return mGames.Skip( pageIndex * pageSize ).Take( pageSize );
-        }
-    }
 }

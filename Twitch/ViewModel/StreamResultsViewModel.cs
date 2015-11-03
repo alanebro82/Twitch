@@ -30,7 +30,7 @@ namespace Twitch.ViewModel
                 }
             }
 
-            mStreams = new IncrementalLoadingCollection<StreamsSource, Stream>( 10, GetStreams );
+            mStreams = new IncrementalLoadingCollection<Stream>( GetStreams );
             RaisePropertyChanged( nameof( Streams ) );
 
             return Task.FromResult( 0 );
@@ -90,14 +90,14 @@ namespace Twitch.ViewModel
         }
         private Game mGame = null;
 
-        public IncrementalLoadingCollection<StreamsSource, Stream> Streams
+        public IncrementalLoadingCollection<Stream> Streams
         {
             get
             {
                 return mStreams;
             }
         }
-        private IncrementalLoadingCollection<StreamsSource, Stream> mStreams;
+        private IncrementalLoadingCollection<Stream> mStreams;
 
         //----------------------------------------------------------------------
         // PRIVATE FIELDS
@@ -107,13 +107,4 @@ namespace Twitch.ViewModel
         private readonly ITwitchQueryService mTwitchQueryService;
     }
 
-    public class StreamsSource : IIncrementalSource<Stream>
-    {
-        private List<Stream> mStreams = new List<Stream>();
-
-        public IEnumerable<Stream> GetPagedItems( int pageIndex, int pageSize )
-        {
-            return mStreams.Skip( pageIndex * pageSize ).Take( pageSize );
-        }
-    }
 }

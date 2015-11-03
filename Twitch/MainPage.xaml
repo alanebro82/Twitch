@@ -13,15 +13,13 @@
         <GridView x:Name="mGamesGridView"
                   ItemsSource="{Binding Games}"
                   ShowsScrollingPlaceholders="True"
-                  DataFetchSize="10"
                   IncrementalLoadingTrigger="Edge"
                   SelectionMode="None"
                   IsItemClickEnabled="True"
                   ItemClick="GridView_ItemClick">
-            <!-- TODO: DataFetchSize, etc-->
             <GridView.ItemTemplate>
                 <DataTemplate x:DataType="model:Game">
-                    <Grid Margin="10">
+                    <Grid Margin="10" MinWidth="200" MinHeight="300">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*" />
                             <RowDefinition Height="Auto" />

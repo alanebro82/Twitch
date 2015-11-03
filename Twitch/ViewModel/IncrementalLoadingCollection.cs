@@ -10,22 +10,13 @@ using Windows.UI.Xaml.Data;
 
 namespace Twitch.ViewModel
 {
-    public interface IIncrementalSource<T>
+    public class IncrementalLoadingCollection<I> : ObservableCollection<I>, ISupportIncrementalLoading
     {
-        IEnumerable<T> GetPagedItems( int pageIndex, int pageSize );
-    }
-
-    public class IncrementalLoadingCollection<T, I> : ObservableCollection<I>, ISupportIncrementalLoading
-         where T : IIncrementalSource<I>, new()
-    {
-        private T mSource = new T();
-        private uint mItemsPerPage;
-        private uint mCurrentPage;
+        private uint mItemsLoaded = 0;
         Func<uint, uint, Task<IEnumerable<I>>> mLoadingFunction;
 
-        public IncrementalLoadingCollection( uint aItemsPerPage, Func<uint, uint, Task<IEnumerable<I>>> aLoadingFunction )
+        public IncrementalLoadingCollection( Func<uint, uint, Task<IEnumerable<I>>> aLoadingFunction )
         {
-            mItemsPerPage = aItemsPerPage;
             mLoadingFunction = aLoadingFunction;
         }
 
@@ -35,23 +26,26 @@ namespace Twitch.ViewModel
             private set;
         } = true;
 
-        public IAsyncOperation<LoadMoreItemsResult> LoadMoreItemsAsync( uint count )
+        public IAsyncOperation<LoadMoreItemsResult> LoadMoreItemsAsync( uint aCount )
         {
             var theDispatcher = Window.Current.Dispatcher;
-            return mLoadingFunction( mItemsPerPage * mCurrentPage++, mItemsPerPage ).ContinueWith( ( aTask ) =>
-            {
-                uint theResultCount = 0;
-                var theResult = aTask.Result;
 
-                if( theResult == null || theResult.Count() == 0 )
+            return Task.Run( async () =>
+            {
+                var theResult = await mLoadingFunction( mItemsLoaded, aCount );
+
+                uint theResultCount = 0;
+
+                if( theResult == null || !theResult.Any() )
                 {
                     HasMoreItems = false;
                 }
                 else
                 {
                     theResultCount = (uint)theResult.Count();
+                    mItemsLoaded += theResultCount;
 
-                    theDispatcher.RunAsync(
+                    await theDispatcher.RunAsync(
                         CoreDispatcherPriority.Normal,
                         () =>
                         {
