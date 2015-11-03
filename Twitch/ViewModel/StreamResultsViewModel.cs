@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
@@ -19,23 +19,27 @@ namespace Twitch.ViewModel
             SelectStreamCommand = new RelayCommand<Stream>( SelectStream );
         }
 
-        public async Task Init(Game aGame)
+        public Task Init(Game aGame)
         {
             Game = aGame;
             if( Game == null )
             {
-                mNavService.GoBack();
-                return;
+                if( mNavService.CurrentPageKey == ViewModelLocator.scStreamResultsPageKey )
+                {
+                    mNavService.GoBack();
+                }
             }
 
-            mStreams.Clear();
+            mStreams = new IncrementalLoadingCollection<StreamsSource, Stream>( 10, GetStreams );
+            RaisePropertyChanged( nameof( Streams ) );
 
-            var theChannels = await mTwitchQueryService.GetChannels( Game.Name );
+            return Task.FromResult( 0 );
+        }
 
-            foreach( var theStream in theChannels.StreamsList )
-            {
-                mStreams.Add( theStream );
-            }
+        public override void Cleanup()
+        {
+            mStreams = null;
+            base.Cleanup();
         }
 
         private void SelectStream( Stream aStream )
@@ -46,6 +50,17 @@ namespace Twitch.ViewModel
             }
 
             mNavService.NavigateTo( ViewModelLocator.scPlayerPageKey, aStream );
+        }
+
+        private async Task<IEnumerable<Stream>> GetStreams( uint aOffset, uint aSize )
+        {
+            var theGame = Game;
+            if( theGame == null )
+            {
+                return Enumerable.Empty<Stream>();
+            }
+
+            return ( await mTwitchQueryService.GetChannels( theGame.Name, aOffset, aSize ) ).StreamsList;
         }
 
         //----------------------------------------------------------------------
@@ -75,14 +90,14 @@ namespace Twitch.ViewModel
         }
         private Game mGame = null;
 
-        public IEnumerable<Stream> Streams
+        public IncrementalLoadingCollection<StreamsSource, Stream> Streams
         {
             get
             {
                 return mStreams;
             }
         }
-        private ObservableCollection<Stream> mStreams = new ObservableCollection<Stream>();
+        private IncrementalLoadingCollection<StreamsSource, Stream> mStreams;
 
         //----------------------------------------------------------------------
         // PRIVATE FIELDS
@@ -90,5 +105,15 @@ namespace Twitch.ViewModel
 
         private readonly INavigationService mNavService;
         private readonly ITwitchQueryService mTwitchQueryService;
+    }
+
+    public class StreamsSource : IIncrementalSource<Stream>
+    {
+        private List<Stream> mStreams = new List<Stream>();
+
+        public IEnumerable<Stream> GetPagedItems( int pageIndex, int pageSize )
+        {
+            return mStreams.Skip( pageIndex * pageSize ).Take( pageSize );
+        }
     }
 }

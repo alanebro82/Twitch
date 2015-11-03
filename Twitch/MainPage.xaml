@@ -9,18 +9,18 @@
       mc:Ignorable="d"
       DataContext="{Binding Main, Source={StaticResource Locator}}">
 
-    <Grid  Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <GridView x:Name="mGamesGridView"
                   ItemsSource="{Binding Games}"
+                  ShowsScrollingPlaceholders="True"
                   DataFetchSize="10"
                   IncrementalLoadingTrigger="Edge"
                   SelectionMode="None"
                   IsItemClickEnabled="True"
-                  ItemClick="GridView_ItemClick"  >
+                  ItemClick="GridView_ItemClick">
             <!-- TODO: DataFetchSize, etc-->
             <GridView.ItemTemplate>
-                <DataTemplate>
+                <DataTemplate x:DataType="model:Game">
                     <Grid Margin="10">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*" />
@@ -28,16 +28,18 @@
                             <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
                         <Image Grid.Row="0"
-                               Source="{Binding ImageUrl}"
+                               x:Name="mImage"
+                               Source="{x:Bind ImageUrl}"
                                Stretch="None" />
                         <TextBlock Grid.Row="1"
-                                   Text="{Binding Name}" />
+                                   TextTrimming="CharacterEllipsis"
+                                   Text="{x:Bind Name}" />
                         <TextBlock Grid.Row="2"
-                                   Text="{Binding Viewers}" />
+                                   TextTrimming="CharacterEllipsis"
+                                   Text="{x:Bind Viewers}" />
                     </Grid>
                 </DataTemplate>
             </GridView.ItemTemplate>
         </GridView>
-
     </Grid>
 </Page>

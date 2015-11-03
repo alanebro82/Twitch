@@ -1,0 +1,1 @@
+MainPackage=C:\Users\alane\Documents\GitHub\Universal\Twitch\Twitch\bin\x64\Release\Twitch_0.1.0.0_x64.appx

@@ -21,7 +21,10 @@ namespace Twitch.ViewModel
         {
             if( aStream == null )
             {
-                mNavService.GoBack();
+                if( mNavService.CurrentPageKey == ViewModelLocator.scPlayerPageKey )
+                {
+                    mNavService.GoBack();
+                }
                 return;
             }
 

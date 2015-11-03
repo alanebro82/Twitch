@@ -24,15 +24,6 @@ namespace Twitch.View
             Window.Current.SizeChanged += Window_SizeChanged;
         }
 
-        private void SystemNavigationManagerBackRequested( object sender, BackRequestedEventArgs e )
-        {
-            if( Frame.CanGoBack )
-            {
-                e.Handled = true;
-                Frame.GoBack();
-            }
-        }
-
         protected override async void OnNavigatedTo( NavigationEventArgs e )
         {
             base.OnNavigatedTo( e );

@@ -23,18 +23,28 @@ namespace Twitch.ViewModel
             mTwitchQueryService = aTwitchQueryService;
 
             SelectGameCommand = new RelayCommand<Game>( SelectGame );
-
-            mGames = new IncrementalLoadingCollection<GameSource, Game>( 10, GetGames );
         }
 
-        public async Task<IEnumerable<Game>> GetGames( uint aOffset, uint aSize )
+        public void Init()
         {
-            return ( await mTwitchQueryService.GetGames( aOffset, aSize ) ).GamesList;
+            mGames = new IncrementalLoadingCollection<GameSource, Game>( 10, GetGames );
+            RaisePropertyChanged( nameof( Games ) );
+        }
+
+        public override void Cleanup()
+        {
+            mGames = null;
+            base.Cleanup();
         }
 
         //----------------------------------------------------------------------
         // PRIVATE METHODS
         //----------------------------------------------------------------------
+
+        private async Task<IEnumerable<Game>> GetGames( uint aOffset, uint aSize )
+        {
+            return ( await mTwitchQueryService.GetGames( aOffset, aSize ) ).GamesList;
+        }
 
         private void SelectGame( Game aGame )
         {

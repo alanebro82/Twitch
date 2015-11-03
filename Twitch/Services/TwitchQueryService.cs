@@ -26,9 +26,9 @@ namespace Twitch.Services
             }
         }
 
-        public async Task<StreamSearchResults> GetChannels( string aGame )
+        public async Task<StreamSearchResults> GetChannels( string aGame, uint aOffset, uint aSize )
         {
-            using( var theChannelsListResponse = await new HttpClient().GetAsync( StreamsListUri( aGame ) ) )
+            using( var theChannelsListResponse = await new HttpClient().GetAsync( StreamsListUri( aGame, aOffset, aSize ) ) )
             {
                 using( var theChannelsListStream = theChannelsListResponse.Content )
                 {
@@ -78,9 +78,9 @@ namespace Twitch.Services
             return new Uri( $"https://api.twitch.tv/kraken/games/top?offset={aOffset}&limit={aSize}" );
         }
 
-        private Uri StreamsListUri( string aGameName )
+        private Uri StreamsListUri( string aGameName, uint aOffset, uint aSize )
         {
-            return new Uri( $"https://api.twitch.tv/kraken/streams?game={aGameName}&limit=10" );
+            return new Uri( $"https://api.twitch.tv/kraken/streams?game={aGameName}&offset={aOffset}&limit={aSize}" );
         }
 
         private Uri TokenRequestUri( string aChannelName )

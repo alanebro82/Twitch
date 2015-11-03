@@ -2,6 +2,7 @@
 using GalaSoft.MvvmLight.Threading;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
@@ -53,6 +54,20 @@ namespace Twitch
             // Ensure the current window is active
             Window.Current.Activate();
             DispatcherHelper.Initialize();
+
+            SystemNavigationManager.GetForCurrentView().BackRequested += SystemNavigationManagerBackRequested;
+        }
+
+        private void SystemNavigationManagerBackRequested( object sender, BackRequestedEventArgs e )
+        {
+            var theRootFrame = Window.Current.Content as Frame;
+
+            if( theRootFrame != null &&
+                theRootFrame.CanGoBack )
+            {
+                e.Handled = true;
+                theRootFrame.GoBack();
+            }
         }
 
         /// <summary>

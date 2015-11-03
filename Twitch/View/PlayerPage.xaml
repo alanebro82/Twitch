@@ -35,9 +35,7 @@
                            IsPlayPauseVisible="False"
                            InteractiveActivationMode="All"
                            InteractiveDeactivationMode="All"
-                           AutoHideInterval="00:00:00.5"
-                           DoubleTapped="mMediaElement_DoubleTapped"
-                           
+                           DoubleTapped="mMediaElement_DoubleTapped"                           
                            Source="{Binding SelectedStreamLocation.Uri}" />
 
         <!-- Stream Selection -->
@@ -51,7 +49,7 @@
                     <TextBlock>
                         <Run Text="{Binding DisplayName}" />
                         <Run Text=", " />
-                        <Run Text="{Binding ResolutionString}" />
+                        <Run Text="{Binding ResolutionS0tring}" />
                         <Run Text=", Bandwidth: " />
                         <Run Text="{Binding Bandwidth, Converter={StaticResource BitrateConverter}}" />
                     </TextBlock>
