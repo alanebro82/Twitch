@@ -20,14 +20,14 @@
         <GridView Grid.Row="1"
                   ShowsScrollingPlaceholders="True"
                   ItemsSource="{Binding Streams}"
-                  DataFetchSize="10"
+                  DataFetchSize="1"
                   IncrementalLoadingTrigger="Edge"
                   SelectionMode="None"
                   IsItemClickEnabled="True"
                   ItemClick="GridView_ItemClick">
             <GridView.ItemTemplate>
                 <DataTemplate x:DataType="model:Stream">
-                    <Grid Margin="10">
+                    <Grid Margin="10" MinWidth="400" MinHeight="200">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*" />
                             <RowDefinition Height="Auto" />
