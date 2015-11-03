@@ -27,22 +27,37 @@
                   ItemClick="GridView_ItemClick">
             <GridView.ItemTemplate>
                 <DataTemplate x:DataType="model:Stream">
-                    <Grid Margin="10" MinWidth="400" MinHeight="200">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="*" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                        </Grid.RowDefinitions>
-                        <Image Grid.Row="0"
-                               x:Name="mImage"
+                    <Grid Margin="5"
+                          Background="Black"
+                          Width="640"
+                          Height="360">
+                        <Image x:Name="mImage"
                                Source="{x:Bind Preview}"
                                Stretch="None" />
-                        <TextBlock Grid.Row="1"
+                        <TextBlock Foreground="White"
+                                   FontWeight="Bold"
+                                   FontSize="20"
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Top"
                                    TextTrimming="CharacterEllipsis"
                                    Text="{x:Bind Channel.Name}" />
-                        <TextBlock Grid.Row="2"
-                                   TextTrimming="CharacterEllipsis"
-                                   Text="{x:Bind Viewers}" />
+                        <Grid HorizontalAlignment="Stretch"
+                              VerticalAlignment="Bottom">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0"
+                                       Foreground="White"
+                                       TextTrimming="CharacterEllipsis"
+                                       Text="{x:Bind Channel.Status}" />
+                            <TextBlock Grid.Column="1"
+                                       Foreground="White"
+                                       TextTrimming="CharacterEllipsis">
+                                <Run Text="{x:Bind Viewers}" />
+                                <Run Text=" viewers" />
+                            </TextBlock>
+                        </Grid>
                     </Grid>
                 </DataTemplate>
             </GridView.ItemTemplate>

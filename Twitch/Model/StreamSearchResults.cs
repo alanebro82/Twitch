@@ -54,7 +54,7 @@ namespace Twitch.Model
             Delay = Convert.ToInt32( aJsonObject.GetNamedNumber( scDelayString ) );
             CreatedAt = DateTime.Parse( aJsonObject.GetNamedString( scCreatedAtString ) );
             IsPlaylist = aJsonObject.GetNamedBoolean( scIsPlaylistString );
-            Preview    = aJsonObject.GetNamedObject( scPreviewString ).GetNamedString( "large" );
+            Preview = aJsonObject.GetNamedObject( scPreviewString ).GetNamedString( "large" );
             Links = new Links( aJsonObject.GetNamedObject( scLinksString ) );
             Channel = new Channel( aJsonObject.GetNamedObject( scChannelString ) );
         }

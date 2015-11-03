@@ -19,22 +19,27 @@
                   ItemClick="GridView_ItemClick">
             <GridView.ItemTemplate>
                 <DataTemplate x:DataType="model:Game">
-                    <Grid Margin="10" MinWidth="200" MinHeight="300">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="*" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                        </Grid.RowDefinitions>
-                        <Image Grid.Row="0"
-                               x:Name="mImage"
+                    <Grid Margin="5"
+                          Background="Black"
+                          Width="272"
+                          Height="380">
+                        <Image x:Name="mImage"
                                Source="{x:Bind ImageUrl}"
                                Stretch="None" />
-                        <TextBlock Grid.Row="1"
+                        <TextBlock Foreground="White"
+                                   FontWeight="Bold"
+                                   FontSize="20"
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Top"
                                    TextTrimming="CharacterEllipsis"
                                    Text="{x:Bind Name}" />
-                        <TextBlock Grid.Row="2"
-                                   TextTrimming="CharacterEllipsis"
-                                   Text="{x:Bind Viewers}" />
+                        <TextBlock Foreground="White"
+                                   HorizontalAlignment="Right"
+                                   VerticalAlignment="Bottom"
+                                   TextTrimming="CharacterEllipsis">
+                            <Run Text="{x:Bind Viewers}" />
+                            <Run Text=" viewers" />
+                        </TextBlock>
                     </Grid>
                 </DataTemplate>
             </GridView.ItemTemplate>
