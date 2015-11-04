@@ -6,6 +6,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:model="using:Twitch.Model"
       mc:Ignorable="d"
+      x:Name="mStreamResultsPage"
       DataContext="{Binding StreamResults, Source={StaticResource Locator}}">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
@@ -18,29 +19,32 @@
                    Text="{Binding Game.Name}" />
 
         <GridView Grid.Row="1"
+                  x:Name="mStreamsGridView"
+                  Margin="5,0"
                   ShowsScrollingPlaceholders="True"
                   ItemsSource="{Binding Streams}"
                   DataFetchSize="1"
                   IncrementalLoadingTrigger="Edge"
                   SelectionMode="None"
                   IsItemClickEnabled="True"
-                  ItemClick="GridView_ItemClick">
+                  ItemClick="GridView_ItemClick"
+                  SizeChanged="mStreamsGridView_SizeChanged">
             <GridView.ItemTemplate>
                 <DataTemplate x:DataType="model:Stream">
-                    <Grid Margin="5"
-                          Background="Black"
-                          Width="640"
-                          Height="360">
+                    <Grid Background="Black"
+                          Margin="5"
+                          Width="{Binding DesiredItemWidth, ElementName=mStreamResultsPage}"
+                          Height="{Binding DesiredItemHeight, ElementName=mStreamResultsPage}">
                         <Image x:Name="mImage"
                                Source="{x:Bind Preview}"
-                               Stretch="None" />
+                               Stretch="Uniform" />
                         <TextBlock Foreground="White"
                                    FontWeight="Bold"
                                    FontSize="20"
                                    HorizontalAlignment="Left"
                                    VerticalAlignment="Top"
                                    TextTrimming="CharacterEllipsis"
-                                   Text="{x:Bind Channel.Name}" />
+                                   Text="{x:Bind Channel.DisplayName}" />
                         <Grid HorizontalAlignment="Stretch"
                               VerticalAlignment="Bottom">
                             <Grid.ColumnDefinitions>

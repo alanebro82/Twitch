@@ -6,26 +6,34 @@
       xmlns:core="using:Microsoft.Xaml.Interactions.Core"
       xmlns:model="using:Twitch.Model"
       x:Class="Twitch.MainPage"
+      x:Name="mMainPage"
       mc:Ignorable="d"
       DataContext="{Binding Main, Source={StaticResource Locator}}">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <GridView x:Name="mGamesGridView"
+                  Margin="0,0"
                   ItemsSource="{Binding Games}"
                   ShowsScrollingPlaceholders="True"
                   IncrementalLoadingTrigger="Edge"
                   SelectionMode="None"
                   IsItemClickEnabled="True"
-                  ItemClick="GridView_ItemClick">
+                  ItemClick="GridView_ItemClick"
+                  SizeChanged="mGamesGridView_SizeChanged">
+            <GridView.ItemContainerStyle>
+                <Style TargetType="GridViewItem">
+                    <Setter Property="Margin" Value="0" />
+                </Style>
+            </GridView.ItemContainerStyle>
             <GridView.ItemTemplate>
                 <DataTemplate x:DataType="model:Game">
-                    <Grid Margin="5"
-                          Background="Black"
-                          Width="272"
-                          Height="380">
+                    <Grid Background="Black"
+                          Margin="5"
+                          Width="{Binding DesiredItemWidth, ElementName=mMainPage}"
+                          Height="{Binding DesiredItemHeight, ElementName=mMainPage}">
                         <Image x:Name="mImage"
                                Source="{x:Bind ImageUrl}"
-                               Stretch="None" />
+                               Stretch="Uniform" />
                         <TextBlock Foreground="White"
                                    FontWeight="Bold"
                                    FontSize="20"
