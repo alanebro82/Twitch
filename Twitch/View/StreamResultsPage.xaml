@@ -40,7 +40,7 @@
                                Stretch="Uniform" />
                         <TextBlock Foreground="White"
                                    FontWeight="Bold"
-                                   FontSize="20"
+                                   FontSize="30"
                                    HorizontalAlignment="Left"
                                    VerticalAlignment="Top"
                                    TextTrimming="CharacterEllipsis"
@@ -53,6 +53,8 @@
                             </Grid.ColumnDefinitions>
                             <TextBlock Grid.Column="0"
                                        Foreground="White"
+                                       FontWeight="Bold"
+                                       FontSize="20"
                                        TextTrimming="CharacterEllipsis"
                                        Text="{x:Bind Channel.Status}" />
                             <TextBlock Grid.Column="1"

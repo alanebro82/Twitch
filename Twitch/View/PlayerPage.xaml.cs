@@ -1,5 +1,6 @@
 ﻿// The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
+using System;
 using Microsoft.PlayerFramework;
 using Twitch.Model;
 using Twitch.ViewModel;
@@ -29,15 +30,27 @@ namespace Twitch.View
             base.OnNavigatedTo( e );
 
             SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
+            Window.Current.CoreWindow.KeyDown += HandleKeyDown;
             await Vm.Init( e.Parameter as Stream );
         }
 
         protected override void OnNavigatingFrom( NavigatingCancelEventArgs e )
         {
             mMediaElement.Stop();
+            Window.Current.CoreWindow.KeyDown -= HandleKeyDown;
 
             base.OnNavigatingFrom( e );
         }
+
+        private void HandleKeyDown( CoreWindow sender, KeyEventArgs args )
+        {
+            if( args.VirtualKey == Windows.System.VirtualKey.Escape )
+            {
+                ApplicationView.GetForCurrentView().ExitFullScreenMode();
+                args.Handled = true;
+            }
+        }
+
         private void Window_SizeChanged( object sender, WindowSizeChangedEventArgs e )
         {
             if( ApplicationView.GetForCurrentView().IsFullScreenMode && mMediaElement.IsFullScreen )
@@ -70,14 +83,6 @@ namespace Twitch.View
                 ApplicationView.GetForCurrentView().TryEnterFullScreenMode();
             }
             else
-            {
-                ApplicationView.GetForCurrentView().ExitFullScreenMode();
-            }
-        }
-
-        private void Page_KeyDown( object sender, Windows.UI.Xaml.Input.KeyRoutedEventArgs e )
-        {
-            if( e.Key == Windows.System.VirtualKey.Escape )
             {
                 ApplicationView.GetForCurrentView().ExitFullScreenMode();
             }

@@ -1,4 +1,6 @@
 ﻿using System;
+using GalaSoft.MvvmLight.Views;
+using Microsoft.Practices.ServiceLocation;
 using Twitch.Model;
 using Twitch.ViewModel;
 using Windows.UI.Core;
@@ -83,5 +85,6 @@ namespace Twitch.View
             DesiredItemWidth = ( theUsableWidth / theColumns ) - ( ( theColumns - 1 ) * 4 ) / theColumns - 10;
             DesiredItemHeight = DesiredItemWidth / scWidthToHeightRatio;
         }
+
     }
 }

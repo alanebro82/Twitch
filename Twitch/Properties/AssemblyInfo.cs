@@ -6,10 +6,10 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle( "TwitchViewer" )]
-[assembly: AssemblyDescription( "" )]
+[assembly: AssemblyDescription( "Simple Twitch.tv viewer" )]
 [assembly: AssemblyConfiguration( "" )]
 [assembly: AssemblyProduct( "TwitchViewer" )]
-[assembly: AssemblyCompany( "" )]
+[assembly: AssemblyCompany( "Adam Lane" )]
 [assembly: AssemblyCopyright( "Copyright ©  2015" )]
 [assembly: AssemblyTrademark( "" )]
 [assembly: AssemblyCulture( "" )]

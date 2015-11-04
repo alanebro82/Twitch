@@ -7,7 +7,6 @@
       xmlns:converter="using:Twitch.View.Converter"
       xmlns:mmppf="using:Microsoft.PlayerFramework"
       mc:Ignorable="d"
-      KeyDown="Page_KeyDown"
       DataContext="{Binding Player, Source={StaticResource Locator}}">
     <Page.Resources>
         <converter:BitrateConverter x:Key="BitrateConverter" />
@@ -49,7 +48,7 @@
                     <TextBlock>
                         <Run Text="{Binding DisplayName}" />
                         <Run Text=", " />
-                        <Run Text="{Binding ResolutionS0tring}" />
+                        <Run Text="{Binding ResolutionString}" />
                         <Run Text=", Bandwidth: " />
                         <Run Text="{Binding Bandwidth, Converter={StaticResource BitrateConverter}}" />
                     </TextBlock>

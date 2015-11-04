@@ -1,5 +1,7 @@
 ﻿using System;
 using GalaSoft.MvvmLight.Threading;
+using GalaSoft.MvvmLight.Views;
+using Microsoft.Practices.ServiceLocation;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.UI.Core;
@@ -56,6 +58,7 @@ namespace Twitch
             DispatcherHelper.Initialize();
 
             SystemNavigationManager.GetForCurrentView().BackRequested += SystemNavigationManagerBackRequested;
+            Window.Current.CoreWindow.KeyDown += HandleKeyDown;
         }
 
         private void SystemNavigationManagerBackRequested( object sender, BackRequestedEventArgs e )
@@ -67,6 +70,16 @@ namespace Twitch
             {
                 e.Handled = true;
                 theRootFrame.GoBack();
+            }
+        }
+
+        private void HandleKeyDown( CoreWindow sender, KeyEventArgs e )
+        {
+            if( e.VirtualKey == Windows.System.VirtualKey.Back ||
+                e.VirtualKey == Windows.System.VirtualKey.GoBack )
+            {
+                ServiceLocator.Current.GetInstance<INavigationService>().GoBack();
+                e.Handled = true;
             }
         }
 
@@ -90,7 +103,10 @@ namespace Twitch
         private void OnSuspending( object sender, SuspendingEventArgs e )
         {
             var deferral = e.SuspendingOperation.GetDeferral();
-            //TODO: Save application state and stop any background activity
+
+            SystemNavigationManager.GetForCurrentView().BackRequested -= SystemNavigationManagerBackRequested;
+            Window.Current.CoreWindow.KeyDown -= HandleKeyDown;
+
             deferral.Complete();
         }
     }
