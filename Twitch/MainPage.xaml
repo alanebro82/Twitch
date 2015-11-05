@@ -22,7 +22,8 @@
                   SizeChanged="mGamesGridView_SizeChanged">
             <GridView.ItemContainerStyle>
                 <Style TargetType="GridViewItem">
-                    <Setter Property="Margin" Value="0" />
+                    <Setter Property="Margin"
+                            Value="0" />
                 </Style>
             </GridView.ItemContainerStyle>
             <GridView.ItemTemplate>

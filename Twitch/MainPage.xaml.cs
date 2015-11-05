@@ -72,7 +72,7 @@ namespace Twitch
             var theUsableWidth = theGrid.ActualWidth - 12/*scrollbar*/;
             var theColumns = Math.Max( 2, Math.Floor( theUsableWidth / scInitialWidthSize ) );
 
-            DesiredItemWidth = ( theUsableWidth / theColumns ) - ( ( theColumns - 1 ) * 4 ) / theColumns - 10;
+            DesiredItemWidth = ( theUsableWidth / theColumns ) - 10/*padding size*/;
             DesiredItemHeight = DesiredItemWidth / scWidthToHeightRatio;
         }
     }

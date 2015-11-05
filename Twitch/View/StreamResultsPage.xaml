@@ -29,6 +29,12 @@
                   IsItemClickEnabled="True"
                   ItemClick="GridView_ItemClick"
                   SizeChanged="mStreamsGridView_SizeChanged">
+            <GridView.ItemContainerStyle>
+                <Style TargetType="GridViewItem">
+                    <Setter Property="Margin"
+                            Value="0" />
+                </Style>
+            </GridView.ItemContainerStyle>
             <GridView.ItemTemplate>
                 <DataTemplate x:DataType="model:Stream">
                     <Grid Background="Black"
