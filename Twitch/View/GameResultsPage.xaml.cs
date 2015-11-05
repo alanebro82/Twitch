@@ -6,7 +6,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 
-namespace Twitch
+namespace Twitch.View
 {
     public sealed partial class GameResultsPage : Page
     {

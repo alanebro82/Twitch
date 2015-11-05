@@ -5,7 +5,7 @@
       xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
       xmlns:core="using:Microsoft.Xaml.Interactions.Core"
       xmlns:model="using:Twitch.Model"
-      x:Class="Twitch.GameResultsPage"
+      x:Class="Twitch.View.GameResultsPage"
       x:Name="mMainPage"
       mc:Ignorable="d"
       DataContext="{Binding GameResults, Source={StaticResource Locator}}">
