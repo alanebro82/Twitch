@@ -25,7 +25,7 @@ namespace Twitch.ViewModel
         private static void SetUpNavigation()
         {
             var theNav = new NavigationService();
-            theNav.Configure( scMainPageKey, typeof( MainPage ) );
+            theNav.Configure( scMainPageKey, typeof( GameResultsPage ) );
             theNav.Configure( scStreamResultsPageKey, typeof( StreamResultsPage ) );
             theNav.Configure( scPlayerPageKey, typeof( PlayerPage ) );
             SimpleIoc.Default.Register<INavigationService>( () => theNav );
@@ -39,13 +39,13 @@ namespace Twitch.ViewModel
 
         private static void SetUpViewModels()
         {
-            SimpleIoc.Default.Register<MainViewModel>();
+            SimpleIoc.Default.Register<GameResultsViewModel>();
             SimpleIoc.Default.Register<PlayerViewModel>();
             SimpleIoc.Default.Register<StreamResultsViewModel>();
         }
 
         public PlayerViewModel Player => ServiceLocator.Current.GetInstance<PlayerViewModel>();
-        public MainViewModel Main => ServiceLocator.Current.GetInstance<MainViewModel>();
+        public GameResultsViewModel GameResults => ServiceLocator.Current.GetInstance<GameResultsViewModel>();
         public StreamResultsViewModel StreamResults => ServiceLocator.Current.GetInstance<StreamResultsViewModel>();
     }
 }

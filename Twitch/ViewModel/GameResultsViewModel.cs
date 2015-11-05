@@ -10,14 +10,14 @@ using Twitch.Services;
 namespace Twitch.ViewModel
 {
     //==========================================================================
-    public class MainViewModel : ViewModelBase
+    public class GameResultsViewModel : ViewModelBase
     {
 
         //----------------------------------------------------------------------
         // PUBLIC METHODS
         //----------------------------------------------------------------------
 
-        public MainViewModel( INavigationService aNavService, ITwitchQueryService aTwitchQueryService )
+        public GameResultsViewModel( INavigationService aNavService, ITwitchQueryService aTwitchQueryService )
         {
             mNavService = aNavService;
             mTwitchQueryService = aTwitchQueryService;

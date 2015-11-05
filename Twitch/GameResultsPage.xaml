@@ -5,10 +5,10 @@
       xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
       xmlns:core="using:Microsoft.Xaml.Interactions.Core"
       xmlns:model="using:Twitch.Model"
-      x:Class="Twitch.MainPage"
+      x:Class="Twitch.GameResultsPage"
       x:Name="mMainPage"
       mc:Ignorable="d"
-      DataContext="{Binding Main, Source={StaticResource Locator}}">
+      DataContext="{Binding GameResults, Source={StaticResource Locator}}">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <GridView x:Name="mGamesGridView"

@@ -99,8 +99,8 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MainPage.xaml.cs">
-      <DependentUpon>MainPage.xaml</DependentUpon>
+    <Compile Include="GameResultsPage.xaml.cs">
+      <DependentUpon>GameResultsPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Model\AccessToken.cs" />
     <Compile Include="Model\M3uStream.cs" />
@@ -110,7 +110,7 @@
     <Compile Include="Services\ITwitchQueryService.cs" />
     <Compile Include="Services\TwitchQueryService.cs" />
     <Compile Include="ViewModel\IncrementalLoadingCollection.cs" />
-    <Compile Include="ViewModel\MainViewModel.cs" />
+    <Compile Include="ViewModel\GameResultsViewModel.cs" />
     <Compile Include="ViewModel\PlayerViewModel.cs" />
     <Compile Include="ViewModel\StreamResultsViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
@@ -143,7 +143,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="MainPage.xaml">
+    <Page Include="GameResultsPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

@@ -8,11 +8,11 @@ using Windows.UI.Xaml.Navigation;
 
 namespace Twitch
 {
-    public sealed partial class MainPage : Page
+    public sealed partial class GameResultsPage : Page
     {
-        public MainViewModel Vm => (MainViewModel)DataContext;
+        public GameResultsViewModel Vm => (GameResultsViewModel)DataContext;
 
-        public MainPage()
+        public GameResultsPage()
         {
             InitializeComponent();
         }
@@ -46,7 +46,7 @@ namespace Twitch
 
         // Using a DependencyProperty as the backing store for DesiredItemWidth.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty DesiredItemWidthProperty =
-            DependencyProperty.Register( "DesiredItemWidth", typeof( double ), typeof( MainPage ), new PropertyMetadata( scInitialWidthSize ) );
+            DependencyProperty.Register( "DesiredItemWidth", typeof( double ), typeof( GameResultsPage ), new PropertyMetadata( scInitialWidthSize ) );
 
         public double DesiredItemHeight
         {
@@ -56,7 +56,7 @@ namespace Twitch
 
         // Using a DependencyProperty as the backing store for DesiredItemWidth.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty DesiredItemHeightProperty =
-            DependencyProperty.Register( "DesiredItemHeight", typeof( double ), typeof( MainPage ), new PropertyMetadata( scInitialWidthSize / scWidthToHeightRatio ) );
+            DependencyProperty.Register( "DesiredItemHeight", typeof( double ), typeof( GameResultsPage ), new PropertyMetadata( scInitialWidthSize / scWidthToHeightRatio ) );
 
         const double scInitialWidthSize = 300;
         const double scWidthToHeightRatio = 68.0 / 95.0;
