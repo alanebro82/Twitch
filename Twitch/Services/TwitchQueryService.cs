@@ -43,10 +43,10 @@ namespace Twitch.Services
             {
                 using( var theTokenStream = theTokenResponse.Content )
                 {
-                    var theAccessToken = new AccessToken( JsonObject.Parse( await theTokenStream.ReadAsStringAsync() ) );
-                    var theTokenJson = theAccessToken.Token.ToJsonObject();
+                    var theAccessTokenJson = JsonObject.Parse( await theTokenStream.ReadAsStringAsync() );
+                    var theTokenJson = JsonObject.Parse( theAccessTokenJson.GetNamedString( "token" ) );
 
-                    using( var thePlaylistResponse = await new HttpClient().GetAsync( StreamRequestUri( theAccessToken.Token.Channel, theTokenJson, theAccessToken.Signature ) ) )
+                    using( var thePlaylistResponse = await new HttpClient().GetAsync( StreamRequestUri( aChannelName, theTokenJson, theAccessTokenJson.GetNamedString("sig" ) ) ) )
                     {
                         using( var thePlaylistStream = thePlaylistResponse.Content )
                         {

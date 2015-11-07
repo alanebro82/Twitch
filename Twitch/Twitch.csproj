@@ -102,7 +102,6 @@
     <Compile Include="View\GameResultsPage.xaml.cs">
       <DependentUpon>GameResultsPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Model\AccessToken.cs" />
     <Compile Include="Model\M3uStream.cs" />
     <Compile Include="Model\StreamSearchResults.cs" />
     <Compile Include="Model\GameSearchResults.cs" />

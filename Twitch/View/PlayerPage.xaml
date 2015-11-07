@@ -34,7 +34,7 @@
                            IsPlayPauseVisible="False"
                            InteractiveActivationMode="All"
                            InteractiveDeactivationMode="All"
-                           DoubleTapped="mMediaElement_DoubleTapped"                           
+                           DoubleTapped="mMediaElement_DoubleTapped"
                            Source="{Binding SelectedStreamLocation.Uri}" />
 
         <!-- Stream Selection -->
