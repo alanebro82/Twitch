@@ -1,5 +1,4 @@
 ﻿using System;
-using GalaSoft.MvvmLight.Views;
 using Microsoft.Practices.ServiceLocation;
 using Twitch.Model;
 using Twitch.ViewModel;
@@ -37,17 +36,12 @@ namespace Twitch.View
             base.OnNavigatingFrom( e );
         }
 
-        private void GridView_ItemClick( object sender, Windows.UI.Xaml.Controls.ItemClickEventArgs e )
+        private async void GridView_ItemClick( object sender, ItemClickEventArgs e )
         {
-            var theStream = e.ClickedItem as Stream;
-            if( Vm.SelectStreamCommand.CanExecute( theStream ) )
-            {
-                Vm.SelectStreamCommand.Execute( theStream );
-            }
+            AppShell.SetFullPlayerHeight();
+            await ServiceLocator.Current.GetInstance<PlayerViewModel>().Init( e.ClickedItem as Stream );
         }
-
-
-
+        
         public double DesiredItemWidth
         {
             get { return (double)GetValue( DesiredItemWidthProperty ); }

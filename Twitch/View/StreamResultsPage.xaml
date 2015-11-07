@@ -65,7 +65,8 @@
                                        Text="{x:Bind Channel.Status}" />
                             <TextBlock Grid.Column="1"
                                        Foreground="White"
-                                       TextTrimming="CharacterEllipsis">
+                                       TextTrimming="CharacterEllipsis"
+                                       VerticalAlignment="Bottom">
                                 <Run Text="{x:Bind Viewers}" />
                                 <Run Text=" viewers" />
                             </TextBlock>

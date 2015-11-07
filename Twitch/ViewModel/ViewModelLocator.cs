@@ -8,27 +8,12 @@ namespace Twitch.ViewModel
 {
     public class ViewModelLocator
     {
-        public const string scMainPageKey = "MainPage";
-        public const string scStreamResultsPageKey = "StreamResultsPage";
-        public const string scPlayerPageKey = "PlayerPage";
-
-
         static ViewModelLocator()
         {
             ServiceLocator.SetLocatorProvider( () => SimpleIoc.Default );
 
-            SetUpNavigation();
             SetUpServices();
             SetUpViewModels();
-        }
-
-        private static void SetUpNavigation()
-        {
-            var theNav = new NavigationService();
-            theNav.Configure( scMainPageKey, typeof( GameResultsPage ) );
-            theNav.Configure( scStreamResultsPageKey, typeof( StreamResultsPage ) );
-            theNav.Configure( scPlayerPageKey, typeof( PlayerPage ) );
-            SimpleIoc.Default.Register<INavigationService>( () => theNav );
         }
 
         private static void SetUpServices()

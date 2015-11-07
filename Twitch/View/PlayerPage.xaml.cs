@@ -1,13 +1,10 @@
 ﻿// The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
-using System;
 using Microsoft.PlayerFramework;
-using Twitch.Model;
 using Twitch.ViewModel;
 using Windows.UI.Core;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Navigation;
 
 namespace Twitch.View
 {
@@ -23,23 +20,15 @@ namespace Twitch.View
             this.InitializeComponent();
 
             Window.Current.SizeChanged += Window_SizeChanged;
+            Window.Current.CoreWindow.KeyDown += CoreWindow_KeyDown;
         }
 
-        protected override async void OnNavigatedTo( NavigationEventArgs e )
+        private void CoreWindow_KeyDown( CoreWindow sender, KeyEventArgs args )
         {
-            base.OnNavigatedTo( e );
-
-            SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
-            Window.Current.CoreWindow.KeyDown += HandleKeyDown;
-            await Vm.Init( e.Parameter as Stream );
-        }
-
-        protected override void OnNavigatingFrom( NavigatingCancelEventArgs e )
-        {
-            mMediaElement.Stop();
-            Window.Current.CoreWindow.KeyDown -= HandleKeyDown;
-
-            base.OnNavigatingFrom( e );
+            if( args.VirtualKey == Windows.System.VirtualKey.Escape )
+            {
+                mMediaElement.IsFullScreen = false;
+            }
         }
 
         private void HandleKeyDown( CoreWindow sender, KeyEventArgs args )
@@ -66,7 +55,8 @@ namespace Twitch.View
                 mMediaElement.IsFullScreen = false;
             }
             else if( !ApplicationView.GetForCurrentView().IsFullScreenMode && !mMediaElement.IsFullScreen )
-            { // do nothing
+            {
+                // do nothing
             }
         }
 
@@ -81,6 +71,7 @@ namespace Twitch.View
             if( thePlayer.IsFullScreen )
             {
                 ApplicationView.GetForCurrentView().TryEnterFullScreenMode();
+                AppShell.SetFullPlayerHeight();
             }
             else
             {

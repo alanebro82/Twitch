@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Threading.Tasks;
 using GalaSoft.MvvmLight;
-using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Views;
 using Twitch.Model;
 using Twitch.Services;
@@ -12,24 +11,14 @@ namespace Twitch.ViewModel
     public class StreamResultsViewModel : ViewModelBase
     {
 
-        public StreamResultsViewModel( INavigationService aNavService, ITwitchQueryService aTwitchQueryService )
+        public StreamResultsViewModel( ITwitchQueryService aTwitchQueryService )
         {
-            mNavService = aNavService;
             mTwitchQueryService = aTwitchQueryService;
-            SelectStreamCommand = new RelayCommand<Stream>( SelectStream );
         }
 
         public Task Init(Game aGame)
         {
             Game = aGame;
-            if( Game == null )
-            {
-                if( mNavService.CurrentPageKey == ViewModelLocator.scStreamResultsPageKey )
-                {
-                    mNavService.GoBack();
-                }
-            }
-
             mStreams = new IncrementalLoadingCollection<Stream>( GetStreams );
             RaisePropertyChanged( nameof( Streams ) );
 
@@ -42,16 +31,6 @@ namespace Twitch.ViewModel
             base.Cleanup();
         }
 
-        private void SelectStream( Stream aStream )
-        {
-            if( aStream == null )
-            {
-                return;
-            }
-
-            mNavService.NavigateTo( ViewModelLocator.scPlayerPageKey, aStream );
-        }
-
         private async Task<IEnumerable<Stream>> GetStreams( uint aOffset, uint aSize )
         {
             var theGame = Game;
@@ -62,16 +41,6 @@ namespace Twitch.ViewModel
 
             return ( await mTwitchQueryService.GetChannels( theGame.Name, aOffset, aSize ) ).StreamsList;
         }
-
-        //----------------------------------------------------------------------
-        // PUBLIC COMMANDS
-        //----------------------------------------------------------------------
-
-        public RelayCommand<Game> InitCommand { get; }
-
-        public RelayCommand<Stream> SelectStreamCommand { get; }
-
-        
 
         //----------------------------------------------------------------------
         // PUBLIC PROPERTIES
@@ -103,7 +72,6 @@ namespace Twitch.ViewModel
         // PRIVATE FIELDS
         //----------------------------------------------------------------------
 
-        private readonly INavigationService mNavService;
         private readonly ITwitchQueryService mTwitchQueryService;
     }
 

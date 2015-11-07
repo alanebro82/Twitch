@@ -29,13 +29,9 @@ namespace Twitch.View
             base.OnNavigatingFrom( e );
         }
 
-        private void GridView_ItemClick( object sender, Windows.UI.Xaml.Controls.ItemClickEventArgs e )
+        private void GridView_ItemClick( object sender, ItemClickEventArgs e )
         {
-            var theGame = e.ClickedItem as Game;
-            if( Vm.SelectGameCommand.CanExecute( theGame ) )
-            {
-                Vm.SelectGameCommand.Execute( theGame );
-            }
+            AppShell.Current.AppFrame.Navigate( typeof( StreamResultsPage ), e.ClickedItem as Game );
         }
 
         public double DesiredItemWidth

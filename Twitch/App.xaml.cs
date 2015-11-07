@@ -27,39 +27,35 @@ namespace Twitch
         /// <param name="e">Details about the launch request and process.</param>
         protected override void OnLaunched( LaunchActivatedEventArgs e )
         {
-            var theRootFrame = Window.Current.Content as Frame;
+            AppShell theShell = Window.Current.Content as AppShell;
 
             // Do not repeat app initialization when the Window already has content,
             // just ensure that the window is active
-            if( theRootFrame == null )
+            if( theShell == null )
             {
-                // Create a Frame to act as the navigation context and navigate to the first page
-                theRootFrame = new Frame();
-
-                theRootFrame.NavigationFailed += OnNavigationFailed;
+                // Create a AppShell to act as the navigation context and navigate to the first page
+                theShell = new AppShell();
+                theShell.AppFrame.NavigationFailed += OnNavigationFailed;
 
                 if( e.PreviousExecutionState == ApplicationExecutionState.Terminated )
                 {
                     //TODO: Load state from previously suspended application
                 }
-
-                // Place the frame in the current Window
-                Window.Current.Content = theRootFrame;
             }
 
-            if( theRootFrame.Content == null )
+            // Place our app shell in the current Window
+            Window.Current.Content = theShell;
+
+            if( theShell.AppFrame.Content == null )
             {
-                // When the navigation stack isn't restored navigate to the first page,
-                // configuring the new page by passing required information as a navigation
-                // parameter
-                theRootFrame.Navigate( typeof( GameResultsPage ), e.Arguments );
+                // When the navigation stack isn't restored, navigate to the first page
+                // suppressing the initial entrance animation.
+                theShell.AppFrame.Navigate( typeof( GameResultsPage ), e.Arguments, new Windows.UI.Xaml.Media.Animation.SuppressNavigationTransitionInfo() );
             }
+
             // Ensure the current window is active
             Window.Current.Activate();
             DispatcherHelper.Initialize();
-
-            SystemNavigationManager.GetForCurrentView().BackRequested += SystemNavigationManagerBackRequested;
-            Window.Current.CoreWindow.KeyDown += HandleKeyDown;
         }
 
         private void SystemNavigationManagerBackRequested( object sender, BackRequestedEventArgs e )
@@ -71,16 +67,6 @@ namespace Twitch
             {
                 e.Handled = true;
                 theRootFrame.GoBack();
-            }
-        }
-
-        private void HandleKeyDown( CoreWindow sender, KeyEventArgs e )
-        {
-            if( e.VirtualKey == Windows.System.VirtualKey.Back ||
-                e.VirtualKey == Windows.System.VirtualKey.GoBack )
-            {
-                ServiceLocator.Current.GetInstance<INavigationService>().GoBack();
-                e.Handled = true;
             }
         }
 
@@ -106,7 +92,6 @@ namespace Twitch
             var deferral = e.SuspendingOperation.GetDeferral();
 
             SystemNavigationManager.GetForCurrentView().BackRequested -= SystemNavigationManagerBackRequested;
-            Window.Current.CoreWindow.KeyDown -= HandleKeyDown;
 
             deferral.Complete();
         }

@@ -22,8 +22,8 @@
                            IsSkipBackVisible="False"
                            IsAudioSelectionEnabled="False"
                            IsAudioSelectionVisible="False"
-                           IsCastingEnabled="True"
-                           IsCastVisible="True"
+                           IsCastingEnabled="False"
+                           IsCastVisible="False"
                            IsTimelineVisible="False"
                            IsTimeRemainingVisible="False"
                            IsTimeElapsedVisible="False"
@@ -35,9 +35,16 @@
                            InteractiveActivationMode="All"
                            InteractiveDeactivationMode="All"
                            DoubleTapped="mMediaElement_DoubleTapped"
-                           Source="{Binding SelectedStreamLocation.Uri}" />
+                           Source="{Binding SelectedStreamLocation.Uri}">
+            <mmppf:MediaPlayer.ControlPanelTemplate>
+                <ControlTemplate>
+                    
+                </ControlTemplate>
+            </mmppf:MediaPlayer.ControlPanelTemplate>
+        </mmppf:MediaPlayer>
 
         <!-- Stream Selection -->
+        <!--
         <ComboBox HorizontalAlignment="Right"
                   VerticalAlignment="Top"
                   Width="100"
@@ -55,5 +62,6 @@
                 </DataTemplate>
             </ComboBox.ItemTemplate>
         </ComboBox>
+        -->
     </Grid>
 </Page>

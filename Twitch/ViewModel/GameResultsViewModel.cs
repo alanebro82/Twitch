@@ -1,9 +1,6 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using GalaSoft.MvvmLight;
-using GalaSoft.MvvmLight.Command;
-using GalaSoft.MvvmLight.Views;
 using Twitch.Model;
 using Twitch.Services;
 
@@ -17,12 +14,9 @@ namespace Twitch.ViewModel
         // PUBLIC METHODS
         //----------------------------------------------------------------------
 
-        public GameResultsViewModel( INavigationService aNavService, ITwitchQueryService aTwitchQueryService )
+        public GameResultsViewModel( ITwitchQueryService aTwitchQueryService )
         {
-            mNavService = aNavService;
             mTwitchQueryService = aTwitchQueryService;
-
-            SelectGameCommand = new RelayCommand<Game>( SelectGame );
         }
 
         public void Init()
@@ -46,22 +40,6 @@ namespace Twitch.ViewModel
             return ( await mTwitchQueryService.GetGames( aOffset, aSize ) ).GamesList;
         }
 
-        private void SelectGame( Game aGame )
-        {
-            if( aGame == null )
-            {
-                return;
-            }
-
-            mNavService.NavigateTo( ViewModelLocator.scStreamResultsPageKey, aGame );
-        }
-
-        //----------------------------------------------------------------------
-        // PUBLIC COMMANDS
-        //----------------------------------------------------------------------
-
-        public RelayCommand<Game> SelectGameCommand { get; }
-
         //----------------------------------------------------------------------
         // PUBLIC PROPERTIES
         //----------------------------------------------------------------------
@@ -79,7 +57,6 @@ namespace Twitch.ViewModel
         // PRIVATE FIELDS
         //----------------------------------------------------------------------
 
-        private readonly INavigationService mNavService;
         private readonly ITwitchQueryService mTwitchQueryService;
     }
 
