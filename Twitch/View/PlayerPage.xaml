@@ -29,12 +29,12 @@
                            IsTimeElapsedVisible="False"
                            IsFullScreenEnabled="True"
                            IsFullScreenVisible="True"
-                           IsFullScreenChanged="mMediaElement_IsFullScreenChanged"
+                           IsFullScreenChanged="mMediaElement_HandleFullScreenChanged"
                            IsPauseEnabled="False"
                            IsPlayPauseVisible="False"
                            InteractiveActivationMode="All"
                            InteractiveDeactivationMode="All"
-                           DoubleTapped="mMediaElement_DoubleTapped"
+                           DoubleTapped="mMediaElement_HandleDoubleTapped"
                            Source="{Binding SelectedStreamLocation.Uri}">
             <mmppf:MediaPlayer.ControlPanelTemplate>
                 <ControlTemplate>

@@ -13,34 +13,28 @@ namespace Twitch.View
     /// </summary>
     public sealed partial class PlayerPage
     {
+        //----------------------------------------------------------------------
+        // PUBLIC PROPERTIES
+        //----------------------------------------------------------------------
+
         public PlayerViewModel Vm => (PlayerViewModel)DataContext;
+
+        //----------------------------------------------------------------------
+        // PUBLIC METHODS
+        //----------------------------------------------------------------------
 
         public PlayerPage()
         {
             this.InitializeComponent();
 
-            Window.Current.SizeChanged += Window_SizeChanged;
-            Window.Current.CoreWindow.KeyDown += CoreWindow_KeyDown;
+            Window.Current.SizeChanged += HandleWindowResized;
         }
 
-        private void CoreWindow_KeyDown( CoreWindow sender, KeyEventArgs args )
-        {
-            if( args.VirtualKey == Windows.System.VirtualKey.Escape )
-            {
-                mMediaElement.IsFullScreen = false;
-            }
-        }
+        //----------------------------------------------------------------------
+        // PRIVATE EVENT HANDLERS
+        //----------------------------------------------------------------------
 
-        private void HandleKeyDown( CoreWindow sender, KeyEventArgs args )
-        {
-            if( args.VirtualKey == Windows.System.VirtualKey.Escape )
-            {
-                ApplicationView.GetForCurrentView().ExitFullScreenMode();
-                args.Handled = true;
-            }
-        }
-
-        private void Window_SizeChanged( object sender, WindowSizeChangedEventArgs e )
+        private void HandleWindowResized( object sender, WindowSizeChangedEventArgs e )
         {
             if( ApplicationView.GetForCurrentView().IsFullScreenMode && mMediaElement.IsFullScreen )
             {
@@ -60,7 +54,7 @@ namespace Twitch.View
             }
         }
 
-        private void mMediaElement_IsFullScreenChanged( object aSender, Windows.UI.Xaml.RoutedPropertyChangedEventArgs<bool> e )
+        private void mMediaElement_HandleFullScreenChanged( object aSender, Windows.UI.Xaml.RoutedPropertyChangedEventArgs<bool> e )
         {
             var thePlayer = aSender as MediaPlayer;
             if( thePlayer == null )
@@ -79,7 +73,7 @@ namespace Twitch.View
             }
         }
 
-        private void mMediaElement_DoubleTapped( object sender, Windows.UI.Xaml.Input.DoubleTappedRoutedEventArgs e )
+        private void mMediaElement_HandleDoubleTapped( object sender, Windows.UI.Xaml.Input.DoubleTappedRoutedEventArgs e )
         {
             mMediaElement.IsFullScreen = !mMediaElement.IsFullScreen;
         }

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
@@ -11,18 +10,21 @@ namespace Twitch.ViewModel
 {
     public class PlayerViewModel : ViewModelBase
     {
+        //----------------------------------------------------------------------
+        // PUBLIC METHODS
+        //----------------------------------------------------------------------
+
         public PlayerViewModel( ITwitchQueryService aTwitchQueryService )
         {
             mTwitchQueryService = aTwitchQueryService;
         }
 
-        public async Task Init( Stream aStream )
+        public async Task Play( Stream aStream )
         {
             if( aStream == null )
             {
                 return;
             }
-
 
             if( CurrentStream != null &&
                 aStream.Channel.Name == CurrentStream.Channel.Name )
@@ -43,16 +45,24 @@ namespace Twitch.ViewModel
 
         public void Stop()
         {
-            Cleanup();
-        }
-
-        public override void Cleanup()
-        {
             SelectedStreamLocation = null;
             mStreamLocationList.Clear();
             CurrentStream = null;
+        }
+
+        //----------------------------------------------------------------------
+        // PUBLIC OVERRIDES
+        //----------------------------------------------------------------------
+
+        public override void Cleanup()
+        {
+            Stop();
             base.Cleanup();
         }
+
+        //----------------------------------------------------------------------
+        // PUBLIC PROPERTIES
+        //----------------------------------------------------------------------
 
         public IEnumerable<M3uStream> StreamLocationList
         {
@@ -89,6 +99,9 @@ namespace Twitch.ViewModel
         }
         private Stream mCurrentStream;
 
+        //----------------------------------------------------------------------
+        // PRIVATE DATA
+        //----------------------------------------------------------------------
 
         private readonly ITwitchQueryService mTwitchQueryService;
 

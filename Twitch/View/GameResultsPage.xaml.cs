@@ -10,12 +10,24 @@ namespace Twitch.View
 {
     public sealed partial class GameResultsPage : Page
     {
+        //----------------------------------------------------------------------
+        // PUBLIC PROPERTIES
+        //----------------------------------------------------------------------
+
         public GameResultsViewModel Vm => (GameResultsViewModel)DataContext;
+
+        //----------------------------------------------------------------------
+        // PUBLIC METHODS
+        //----------------------------------------------------------------------
 
         public GameResultsPage()
         {
             InitializeComponent();
         }
+
+        //----------------------------------------------------------------------
+        // PROTECTED OVERRIDES
+        //----------------------------------------------------------------------
 
         protected override void OnNavigatedTo( NavigationEventArgs e )
         {
@@ -24,40 +36,15 @@ namespace Twitch.View
             base.OnNavigatedTo( e );
         }
 
-        protected override void OnNavigatingFrom( NavigatingCancelEventArgs e )
-        {
-            base.OnNavigatingFrom( e );
-        }
+        //----------------------------------------------------------------------
+        // PRIVATE EVENT HANDLERS
+        //----------------------------------------------------------------------
 
-        private void GridView_ItemClick( object sender, ItemClickEventArgs e )
+        private void mGamesGridView_HandleItemClick( object sender, ItemClickEventArgs e )
         {
             AppShell.Current.AppFrame.Navigate( typeof( StreamResultsPage ), e.ClickedItem as Game );
         }
-
-        public double DesiredItemWidth
-        {
-            get { return (double)GetValue( DesiredItemWidthProperty ); }
-            set { SetValue( DesiredItemWidthProperty, value ); }
-        }
-
-        // Using a DependencyProperty as the backing store for DesiredItemWidth.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty DesiredItemWidthProperty =
-            DependencyProperty.Register( "DesiredItemWidth", typeof( double ), typeof( GameResultsPage ), new PropertyMetadata( scInitialWidthSize ) );
-
-        public double DesiredItemHeight
-        {
-            get { return (double)GetValue( DesiredItemHeightProperty ); }
-            set { SetValue( DesiredItemHeightProperty, value ); }
-        }
-
-        // Using a DependencyProperty as the backing store for DesiredItemWidth.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty DesiredItemHeightProperty =
-            DependencyProperty.Register( "DesiredItemHeight", typeof( double ), typeof( GameResultsPage ), new PropertyMetadata( scInitialWidthSize / scWidthToHeightRatio ) );
-
-        const double scInitialWidthSize = 300;
-        const double scWidthToHeightRatio = 68.0 / 95.0;
-
-        private void mGamesGridView_SizeChanged( object sender, Windows.UI.Xaml.SizeChangedEventArgs e )
+        private void mGamesGridView_HandleSizeChanged( object sender, Windows.UI.Xaml.SizeChangedEventArgs e )
         {
             var theGrid = sender as GridView;
             if( theGrid == null )
@@ -71,5 +58,33 @@ namespace Twitch.View
             DesiredItemWidth = ( theUsableWidth / theColumns ) - 10/*padding size*/;
             DesiredItemHeight = DesiredItemWidth / scWidthToHeightRatio;
         }
+
+        //----------------------------------------------------------------------
+        // PUBLIC DEPENDENCY PROPERTIES
+        //----------------------------------------------------------------------
+
+        public double DesiredItemWidth
+        {
+            get { return (double)GetValue( DesiredItemWidthProperty ); }
+            set { SetValue( DesiredItemWidthProperty, value ); }
+        }
+        public static readonly DependencyProperty DesiredItemWidthProperty =
+            DependencyProperty.Register( nameof( DesiredItemWidth ), typeof( double ), typeof( GameResultsPage ), new PropertyMetadata( scInitialWidthSize ) );
+
+        public double DesiredItemHeight
+        {
+            get { return (double)GetValue( DesiredItemHeightProperty ); }
+            set { SetValue( DesiredItemHeightProperty, value ); }
+        }
+        public static readonly DependencyProperty DesiredItemHeightProperty =
+            DependencyProperty.Register( nameof( DesiredItemHeight ), typeof( double ), typeof( GameResultsPage ), new PropertyMetadata( scInitialWidthSize / scWidthToHeightRatio ) );
+
+        //----------------------------------------------------------------------
+        // PRIVATE CONSTS
+        //----------------------------------------------------------------------
+
+        const double scInitialWidthSize = 300;
+        const double scWidthToHeightRatio = 68.0 / 95.0;
+
     }
 }

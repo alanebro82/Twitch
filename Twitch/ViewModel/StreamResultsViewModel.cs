@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Threading.Tasks;
 using GalaSoft.MvvmLight;
-using GalaSoft.MvvmLight.Views;
 using Twitch.Model;
 using Twitch.Services;
 
@@ -10,26 +9,24 @@ namespace Twitch.ViewModel
 {
     public class StreamResultsViewModel : ViewModelBase
     {
+        //----------------------------------------------------------------------
+        // PUBLIC METHODS
+        //----------------------------------------------------------------------
 
         public StreamResultsViewModel( ITwitchQueryService aTwitchQueryService )
         {
             mTwitchQueryService = aTwitchQueryService;
         }
 
-        public Task Init(Game aGame)
-        {
-            Game = aGame;
-            mStreams = new IncrementalLoadingCollection<Stream>( GetStreams );
-            RaisePropertyChanged( nameof( Streams ) );
-
-            return Task.FromResult( 0 );
-        }
-
         public override void Cleanup()
         {
-            mStreams = null;
+            Streams = null;
             base.Cleanup();
         }
+
+        //----------------------------------------------------------------------
+        // PRIVATE METHODS
+        //----------------------------------------------------------------------
 
         private async Task<IEnumerable<Stream>> GetStreams( uint aOffset, uint aSize )
         {
@@ -54,7 +51,10 @@ namespace Twitch.ViewModel
             }
             set
             {
-                Set( nameof( Game ), ref mGame, value );
+                if( Set( nameof( Game ), ref mGame, value ) )
+                {
+                    Streams = new IncrementalLoadingCollection<Stream>( GetStreams );
+                }
             }
         }
         private Game mGame = null;
@@ -64,6 +64,10 @@ namespace Twitch.ViewModel
             get
             {
                 return mStreams;
+            }
+            set
+            {
+                Set( nameof( Streams ), ref mStreams, value );
             }
         }
         private IncrementalLoadingCollection<Stream> mStreams;
