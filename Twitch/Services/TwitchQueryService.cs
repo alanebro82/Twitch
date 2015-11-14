@@ -17,20 +17,29 @@ namespace Twitch.Services
 
         public async Task<GameSearchResults> GetGames( uint aOffset, uint aSize )
         {
-            return new GameSearchResults( JsonObject.Parse( await new HttpClient().GetStringAsync( GamesListUri( aOffset, aSize ) ) ) );
+            using( var theHttpClient = new HttpClient() )
+            {
+                return new GameSearchResults( JsonObject.Parse( await theHttpClient.GetStringAsync( GamesListUri( aOffset, aSize ) ) ) );
+            }
         }
 
         public async Task<StreamSearchResults> GetChannels( string aGame, uint aOffset, uint aSize )
         {
-            return new StreamSearchResults( JsonObject.Parse( await new HttpClient().GetStringAsync( StreamsListUri( aGame, aOffset, aSize ) ) ) );
+            using( var theHttpClient = new HttpClient() )
+            {
+                return new StreamSearchResults( JsonObject.Parse( await theHttpClient.GetStringAsync( StreamsListUri( aGame, aOffset, aSize ) ) ) );
+            }
         }
 
         public async Task<string> GetChannel( string aChannelName )
         {
-            var theAccessTokenJson = JsonObject.Parse( await new HttpClient().GetStringAsync( TokenRequestUri( aChannelName ) ) );
-            var theTokenJson = JsonObject.Parse( theAccessTokenJson.GetNamedString( "token" ) );
+            using( var theHttpClient = new HttpClient() )
+            {
+                var theAccessTokenJson = JsonObject.Parse( await theHttpClient.GetStringAsync( TokenRequestUri( aChannelName ) ) );
+                var theTokenJson = JsonObject.Parse( theAccessTokenJson.GetNamedString( "token" ) );
 
-            return await new HttpClient().GetStringAsync( StreamRequestUri( aChannelName, theTokenJson, theAccessTokenJson.GetNamedString( "sig" ) ) );
+                return await theHttpClient.GetStringAsync( StreamRequestUri( aChannelName, theTokenJson, theAccessTokenJson.GetNamedString( "sig" ) ) );
+            }
         }
 
         //----------------------------------------------------------------------
