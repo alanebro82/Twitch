@@ -11,6 +11,7 @@ using Windows.UI.Xaml.Navigation;
 
 namespace Twitch.View
 {
+    //==========================================================================
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
@@ -20,12 +21,14 @@ namespace Twitch.View
         // PUBLIC PROPERTIES
         //----------------------------------------------------------------------
 
+        //----------------------------------------------------------------------
         public StreamResultsViewModel Vm => (StreamResultsViewModel)DataContext;
 
         //----------------------------------------------------------------------
         // PUBLIC METHODS
         //----------------------------------------------------------------------
 
+        //----------------------------------------------------------------------
         public StreamResultsPage()
         {
             this.InitializeComponent();
@@ -35,6 +38,7 @@ namespace Twitch.View
         // PROTECTED OVERRIDES
         //----------------------------------------------------------------------
 
+        //----------------------------------------------------------------------
         protected override void OnNavigatedTo( NavigationEventArgs e )
         {
             base.OnNavigatedTo( e );
@@ -47,12 +51,14 @@ namespace Twitch.View
         // PRIVATE EVENT HANDLERS
         //----------------------------------------------------------------------
 
+        //----------------------------------------------------------------------
         private async void mStreamsGridView_HandleItemClick( object sender, ItemClickEventArgs e )
         {
             AppShell.SetFullPlayerHeight();
             await ServiceLocator.Current.GetInstance<PlayerViewModel>().Play( e.ClickedItem as Stream );
         }
 
+        //----------------------------------------------------------------------
         private void mStreamsGridView_HandleSizeChanged( object sender, Windows.UI.Xaml.SizeChangedEventArgs e )
         {
             var theGrid = sender as GridView;
@@ -72,6 +78,7 @@ namespace Twitch.View
         // PUBLIC DEPENDENCY PROPERTIES
         //----------------------------------------------------------------------
 
+        //----------------------------------------------------------------------
         public double DesiredItemWidth
         {
             get { return (double)GetValue( DesiredItemWidthProperty ); }
@@ -80,6 +87,7 @@ namespace Twitch.View
         public static readonly DependencyProperty DesiredItemWidthProperty =
             DependencyProperty.Register( "DesiredItemWidth", typeof( double ), typeof( StreamResultsPage ), new PropertyMetadata( scInitialWidthSize ) );
 
+        //----------------------------------------------------------------------
         public double DesiredItemHeight
         {
             get { return (double)GetValue( DesiredItemHeightProperty ); }

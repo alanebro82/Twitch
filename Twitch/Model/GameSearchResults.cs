@@ -4,6 +4,7 @@ using Windows.Data.Json;
 
 namespace Twitch.Model
 {
+    //==========================================================================
     public class GameSearchResults
     {
         //----------------------------------------------------------------------
@@ -22,16 +23,19 @@ namespace Twitch.Model
             GamesList = theGameList;
         }
 
+        //----------------------------------------------------------------------
         public int Total
         {
             get;
         }
 
+        //----------------------------------------------------------------------
         public Links Links
         {
             get;
         }
 
+        //----------------------------------------------------------------------
         public IEnumerable<Game> GamesList
         {
             get;
@@ -42,6 +46,7 @@ namespace Twitch.Model
         private const string scTopString = "top";
     }
 
+    //==========================================================================
     public class Links
     {
         //----------------------------------------------------------------------
@@ -89,6 +94,7 @@ namespace Twitch.Model
             ImageUrl = theGameObject.GetNamedObject( scImageUrlString ).GetNamedString( scLargeImageUrlString );
         }
 
+        //----------------------------------------------------------------------
         public override bool Equals( object aOther )
         {
             if( aOther is Game )
@@ -99,6 +105,7 @@ namespace Twitch.Model
             return false;
         }
 
+        //----------------------------------------------------------------------
         public override int GetHashCode()
         {
             return 17 * Name.GetHashCode();

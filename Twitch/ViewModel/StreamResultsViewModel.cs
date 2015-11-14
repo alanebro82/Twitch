@@ -7,17 +7,20 @@ using Twitch.Services;
 
 namespace Twitch.ViewModel
 {
+    //==========================================================================
     public class StreamResultsViewModel : ViewModelBase
     {
         //----------------------------------------------------------------------
         // PUBLIC METHODS
         //----------------------------------------------------------------------
 
+        //----------------------------------------------------------------------
         public StreamResultsViewModel( ITwitchQueryService aTwitchQueryService )
         {
             mTwitchQueryService = aTwitchQueryService;
         }
 
+        //----------------------------------------------------------------------
         public override void Cleanup()
         {
             Streams = null;
@@ -28,6 +31,7 @@ namespace Twitch.ViewModel
         // PRIVATE METHODS
         //----------------------------------------------------------------------
 
+        //----------------------------------------------------------------------
         private async Task<IEnumerable<Stream>> GetStreams( uint aOffset, uint aSize )
         {
             var theGame = Game;
@@ -43,6 +47,7 @@ namespace Twitch.ViewModel
         // PUBLIC PROPERTIES
         //----------------------------------------------------------------------
 
+        //----------------------------------------------------------------------
         public Game Game
         {
             get
@@ -59,6 +64,7 @@ namespace Twitch.ViewModel
         }
         private Game mGame = null;
 
+        //----------------------------------------------------------------------
         public IncrementalLoadingCollection<Stream> Streams
         {
             get

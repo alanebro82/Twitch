@@ -8,6 +8,7 @@ using Windows.UI.Xaml;
 
 namespace Twitch.View
 {
+    //==========================================================================
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
@@ -17,12 +18,14 @@ namespace Twitch.View
         // PUBLIC PROPERTIES
         //----------------------------------------------------------------------
 
+        //----------------------------------------------------------------------
         public PlayerViewModel Vm => (PlayerViewModel)DataContext;
 
         //----------------------------------------------------------------------
         // PUBLIC METHODS
         //----------------------------------------------------------------------
 
+        //----------------------------------------------------------------------
         public PlayerPage()
         {
             this.InitializeComponent();
@@ -34,6 +37,7 @@ namespace Twitch.View
         // PRIVATE EVENT HANDLERS
         //----------------------------------------------------------------------
 
+        //----------------------------------------------------------------------
         private void HandleWindowResized( object sender, WindowSizeChangedEventArgs e )
         {
             if( ApplicationView.GetForCurrentView().IsFullScreenMode && mMediaElement.IsFullScreen )
@@ -54,6 +58,7 @@ namespace Twitch.View
             }
         }
 
+        //----------------------------------------------------------------------
         private void mMediaElement_HandleFullScreenChanged( object aSender, Windows.UI.Xaml.RoutedPropertyChangedEventArgs<bool> e )
         {
             var thePlayer = aSender as MediaPlayer;
@@ -73,6 +78,7 @@ namespace Twitch.View
             }
         }
 
+        //----------------------------------------------------------------------
         private void mMediaElement_HandleDoubleTapped( object sender, Windows.UI.Xaml.Input.DoubleTappedRoutedEventArgs e )
         {
             mMediaElement.IsFullScreen = !mMediaElement.IsFullScreen;

@@ -10,22 +10,31 @@ using Windows.UI.Xaml.Data;
 
 namespace Twitch.ViewModel
 {
+    //==========================================================================
     public class IncrementalLoadingCollection<I> : ObservableCollection<I>, ISupportIncrementalLoading
     {
-        private uint mItemsLoaded = 0;
-        Func<uint, uint, Task<IEnumerable<I>>> mLoadingFunction;
+        //----------------------------------------------------------------------
+        // PUBLIC METHODS
+        //----------------------------------------------------------------------
 
+        //----------------------------------------------------------------------
         public IncrementalLoadingCollection( Func<uint, uint, Task<IEnumerable<I>>> aLoadingFunction )
         {
             mLoadingFunction = aLoadingFunction;
         }
 
+        //----------------------------------------------------------------------
+        // PUBLIC ISupportIncrementalLoading
+        //----------------------------------------------------------------------
+
+        //----------------------------------------------------------------------
         public bool HasMoreItems
         {
             get;
             private set;
         } = true;
 
+        //----------------------------------------------------------------------
         public IAsyncOperation<LoadMoreItemsResult> LoadMoreItemsAsync( uint aCount )
         {
             var theDispatcher = Window.Current.Dispatcher;
@@ -59,5 +68,13 @@ namespace Twitch.ViewModel
                 return new LoadMoreItemsResult() { Count = theResultCount };
             } ).AsAsyncOperation();
         }
+
+        //----------------------------------------------------------------------
+        // PRIVATE FIELDS
+        //----------------------------------------------------------------------
+
+        private uint mItemsLoaded = 0;
+        Func<uint, uint, Task<IEnumerable<I>>> mLoadingFunction;
+
     }
 }

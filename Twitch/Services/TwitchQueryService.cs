@@ -17,44 +17,20 @@ namespace Twitch.Services
 
         public async Task<GameSearchResults> GetGames( uint aOffset, uint aSize )
         {
-            using( var theGamesListResponse = await new HttpClient().GetAsync( GamesListUri( aOffset, aSize ) ) )
-            {
-                using( var theGamesListStream = theGamesListResponse.Content )
-                {
-                    return new GameSearchResults( JsonObject.Parse( await theGamesListStream.ReadAsStringAsync() ) );
-                }
-            }
+            return new GameSearchResults( JsonObject.Parse( await new HttpClient().GetStringAsync( GamesListUri( aOffset, aSize ) ) ) );
         }
 
         public async Task<StreamSearchResults> GetChannels( string aGame, uint aOffset, uint aSize )
         {
-            using( var theChannelsListResponse = await new HttpClient().GetAsync( StreamsListUri( aGame, aOffset, aSize ) ) )
-            {
-                using( var theChannelsListStream = theChannelsListResponse.Content )
-                {
-                    return new StreamSearchResults( JsonObject.Parse( await theChannelsListStream.ReadAsStringAsync() ) );
-                }
-            }
+            return new StreamSearchResults( JsonObject.Parse( await new HttpClient().GetStringAsync( StreamsListUri( aGame, aOffset, aSize ) ) ) );
         }
 
         public async Task<string> GetChannel( string aChannelName )
         {
-            using( var theTokenResponse = await new HttpClient().GetAsync( TokenRequestUri( aChannelName ) ) )
-            {
-                using( var theTokenStream = theTokenResponse.Content )
-                {
-                    var theAccessTokenJson = JsonObject.Parse( await theTokenStream.ReadAsStringAsync() );
-                    var theTokenJson = JsonObject.Parse( theAccessTokenJson.GetNamedString( "token" ) );
+            var theAccessTokenJson = JsonObject.Parse( await new HttpClient().GetStringAsync( TokenRequestUri( aChannelName ) ) );
+            var theTokenJson = JsonObject.Parse( theAccessTokenJson.GetNamedString( "token" ) );
 
-                    using( var thePlaylistResponse = await new HttpClient().GetAsync( StreamRequestUri( aChannelName, theTokenJson, theAccessTokenJson.GetNamedString("sig" ) ) ) )
-                    {
-                        using( var thePlaylistStream = thePlaylistResponse.Content )
-                        {
-                            return await thePlaylistStream.ReadAsStringAsync();
-                        }
-                    }
-                }
-            }
+            return await new HttpClient().GetStringAsync( StreamRequestUri( aChannelName, theTokenJson, theAccessTokenJson.GetNamedString( "sig" ) ) );
         }
 
         //----------------------------------------------------------------------

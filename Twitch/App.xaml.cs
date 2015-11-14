@@ -1,8 +1,5 @@
 ﻿using System;
-using GalaSoft.MvvmLight.Ioc;
 using GalaSoft.MvvmLight.Threading;
-using GalaSoft.MvvmLight.Views;
-using Microsoft.Practices.ServiceLocation;
 using Twitch.View;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
@@ -11,14 +8,17 @@ using Windows.UI.Xaml.Navigation;
 
 namespace Twitch
 {
+    //==========================================================================
     sealed partial class App
     {
+        //----------------------------------------------------------------------
         public App()
         {
             InitializeComponent();
             Suspending += OnSuspending;
         }
 
+        //----------------------------------------------------------------------
         /// <summary>
         /// Invoked when the application is launched normally by the end user.  Other entry points
         /// will be used such as when the application is launched to open a specific file.
@@ -57,6 +57,7 @@ namespace Twitch
             DispatcherHelper.Initialize();
         }
 
+        //----------------------------------------------------------------------
         /// <summary>
         /// Invoked when Navigation to a certain page fails
         /// </summary>
@@ -67,6 +68,7 @@ namespace Twitch
             throw new Exception( "Failed to load Page " + e.SourcePageType.FullName );
         }
 
+        //----------------------------------------------------------------------
         /// <summary>
         /// Invoked when application execution is being suspended.  Application state is saved
         /// without knowing whether the application will be terminated or resumed with the contents

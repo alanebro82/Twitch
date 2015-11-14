@@ -9,6 +9,7 @@ using Windows.UI.Xaml.Controls;
 
 namespace Twitch
 {
+    //==========================================================================
     /// <summary>
     /// The "chrome" layer of the app that provides top-level navigation with
     /// proper keyboarding navigation.
@@ -26,6 +27,7 @@ namespace Twitch
         // PUBLIC STATIC FUNCTIONS
         //----------------------------------------------------------------------
 
+        //----------------------------------------------------------------------
         public static void SetClosedPlayerHeight()
         {
             if( Current.AppFrame != null )
@@ -41,6 +43,7 @@ namespace Twitch
             UpdateBackButtonVisibility();
         }
 
+        //----------------------------------------------------------------------
         public static void SetSplitPlayerHeight()
         {
             if( Current.AppFrame != null )
@@ -56,6 +59,7 @@ namespace Twitch
             UpdateBackButtonVisibility();
         }
 
+        //----------------------------------------------------------------------
         public static void SetFullPlayerHeight()
         {
             if( Current.AppFrame != null )
@@ -75,6 +79,7 @@ namespace Twitch
         // PUBLIC METHODS
         //----------------------------------------------------------------------
 
+        //----------------------------------------------------------------------
         public AppShell()
         {
             InitializeComponent();
@@ -93,12 +98,14 @@ namespace Twitch
         // PUBLIC PROPERTIES
         //----------------------------------------------------------------------
 
-        public Frame AppFrame { get { return mFrame; } }
+        //----------------------------------------------------------------------
+        public Frame AppFrame => mFrame;
 
         //----------------------------------------------------------------------
         // PRIVATE EVENT HANDLERS
         //----------------------------------------------------------------------
 
+        //----------------------------------------------------------------------
         private void HandleBackRequested( object sender, BackRequestedEventArgs e )
         {
             bool handled = e.Handled;
@@ -106,6 +113,7 @@ namespace Twitch
             e.Handled = handled;
         }
 
+        //----------------------------------------------------------------------
         private void HandleKeyDown( CoreWindow sender, KeyEventArgs e )
         {
             if( e.VirtualKey == Windows.System.VirtualKey.Back ||
@@ -133,11 +141,13 @@ namespace Twitch
             }
         }
 
+        //----------------------------------------------------------------------
         private void HandleWindowResized( CoreWindow sender, WindowSizeChangedEventArgs args )
         {
             UpdatePlayerSize();
         }
 
+        //----------------------------------------------------------------------
         private void mClosePlayerButton_HandleTapped( object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e )
         {
             SetClosedPlayerHeight();
@@ -147,6 +157,7 @@ namespace Twitch
         // PRIVATE METHODS
         //----------------------------------------------------------------------
 
+        //----------------------------------------------------------------------
         private void BackRequested( ref bool aHandled )
         {
             // Get a hold of the current frame so that we can inspect the app back stack.
@@ -174,6 +185,7 @@ namespace Twitch
             }
         }
 
+        //----------------------------------------------------------------------
         private static void UpdatePlayerSize()
         {
             switch( Current.DesiredPlayerVerticalAlignment )
@@ -194,6 +206,7 @@ namespace Twitch
             }
         }
 
+        //----------------------------------------------------------------------
         private static void UpdateBackButtonVisibility()
         {
             var theNavManager = SystemNavigationManager.GetForCurrentView();
@@ -216,6 +229,7 @@ namespace Twitch
         // PUBLIC DEPENDENCY PROPERTIES
         //----------------------------------------------------------------------
 
+        //----------------------------------------------------------------------
         public VerticalAlignment DesiredPlayerVerticalAlignment
         {
             get { return (VerticalAlignment)GetValue( DesiredPlayerVerticalAlignmentProperty ); }
@@ -224,7 +238,7 @@ namespace Twitch
         public static readonly DependencyProperty DesiredPlayerVerticalAlignmentProperty =
             DependencyProperty.Register( "DesiredPlayerVerticalAlignment", typeof( VerticalAlignment ), typeof( AppShell ), new PropertyMetadata( VerticalAlignment.Bottom ) );
 
-
+        //----------------------------------------------------------------------
         public double DesiredPlayerHeight
         {
             get { return (double)GetValue( DesiredPlayerHeightProperty ); }

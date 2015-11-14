@@ -14,17 +14,20 @@ namespace Twitch.ViewModel
         // PUBLIC METHODS
         //----------------------------------------------------------------------
 
+        //----------------------------------------------------------------------
         public GameResultsViewModel( ITwitchQueryService aTwitchQueryService )
         {
             mTwitchQueryService = aTwitchQueryService;
         }
 
+        //----------------------------------------------------------------------
         public void Init()
         {
             mGames = new IncrementalLoadingCollection<Game>( GetGames );
             RaisePropertyChanged( nameof( Games ) );
         }
 
+        //----------------------------------------------------------------------
         public override void Cleanup()
         {
             mGames = null;
@@ -35,6 +38,7 @@ namespace Twitch.ViewModel
         // PRIVATE METHODS
         //----------------------------------------------------------------------
 
+        //----------------------------------------------------------------------
         private async Task<IEnumerable<Game>> GetGames( uint aOffset, uint aSize )
         {
             return ( await mTwitchQueryService.GetGames( aOffset, aSize ) ).GamesList;
@@ -44,6 +48,7 @@ namespace Twitch.ViewModel
         // PUBLIC PROPERTIES
         //----------------------------------------------------------------------
 
+        //----------------------------------------------------------------------
         public IncrementalLoadingCollection<Game> Games
         {
             get

@@ -8,17 +8,20 @@ using Twitch.Services;
 
 namespace Twitch.ViewModel
 {
+    //==========================================================================
     public class PlayerViewModel : ViewModelBase
     {
         //----------------------------------------------------------------------
         // PUBLIC METHODS
         //----------------------------------------------------------------------
 
+        //----------------------------------------------------------------------
         public PlayerViewModel( ITwitchQueryService aTwitchQueryService )
         {
             mTwitchQueryService = aTwitchQueryService;
         }
 
+        //----------------------------------------------------------------------
         public async Task Play( Stream aStream )
         {
             if( aStream == null )
@@ -43,6 +46,7 @@ namespace Twitch.ViewModel
             SelectedStreamLocation = StreamLocationList.FirstOrDefault();
         }
 
+        //----------------------------------------------------------------------
         public void Stop()
         {
             SelectedStreamLocation = null;
@@ -54,6 +58,7 @@ namespace Twitch.ViewModel
         // PUBLIC OVERRIDES
         //----------------------------------------------------------------------
 
+        //----------------------------------------------------------------------
         public override void Cleanup()
         {
             Stop();
@@ -64,6 +69,7 @@ namespace Twitch.ViewModel
         // PUBLIC PROPERTIES
         //----------------------------------------------------------------------
 
+        //----------------------------------------------------------------------
         public IEnumerable<M3uStream> StreamLocationList
         {
             get
@@ -73,6 +79,7 @@ namespace Twitch.ViewModel
         }
         private readonly ObservableCollection<M3uStream> mStreamLocationList = new ObservableCollection<M3uStream>();
 
+        //----------------------------------------------------------------------
         public M3uStream SelectedStreamLocation
         {
             get
@@ -86,6 +93,7 @@ namespace Twitch.ViewModel
         }
         private M3uStream mSelectedStreamLocation;
 
+        //----------------------------------------------------------------------
         public Stream CurrentStream
         {
             get

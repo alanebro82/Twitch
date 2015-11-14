@@ -3,6 +3,7 @@ using Twitch.Model;
 
 namespace Twitch.Services
 {
+    //==========================================================================
     public interface ITwitchQueryService
     {
         Task<GameSearchResults> GetGames( uint aOffset, uint aSize );

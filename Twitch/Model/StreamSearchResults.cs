@@ -4,6 +4,7 @@ using Windows.Data.Json;
 
 namespace Twitch.Model
 {
+    //==========================================================================
     public class StreamSearchResults
     {
         //----------------------------------------------------------------------
@@ -22,16 +23,19 @@ namespace Twitch.Model
             StreamsList = theStreamList;
         }
 
+        //----------------------------------------------------------------------
         public int Total
         {
             get;
         } = 0;
 
+        //----------------------------------------------------------------------
         public Links Links
         {
             get;
         }
 
+        //----------------------------------------------------------------------
         public IEnumerable<Stream> StreamsList
         {
             get;
@@ -42,8 +46,10 @@ namespace Twitch.Model
         private const string scStreamsString = "streams";
     }
 
+    //==========================================================================
     public class Stream
     {
+        //----------------------------------------------------------------------
         public Stream( JsonObject aJsonObject )
         {
             Id = Convert.ToInt64( aJsonObject.GetNamedNumber( scIdString ) );
@@ -59,48 +65,67 @@ namespace Twitch.Model
             Channel = new Channel( aJsonObject.GetNamedObject( scChannelString ) );
         }
 
+        //----------------------------------------------------------------------
         public Int64 Id
         {
             get;
         }
 
+        //----------------------------------------------------------------------
         public string Game
         {
             get;
         }
 
+        //----------------------------------------------------------------------
         public int Viewers
         {
             get;
         }
+
+        //----------------------------------------------------------------------
         public int VideoHeight
         {
             get;
         }
+
+        //----------------------------------------------------------------------
         public int AverageFps
         {
             get;
         }
+
+        //----------------------------------------------------------------------
         public double Delay
         {
             get;
         }
+
+        //----------------------------------------------------------------------
         public DateTime CreatedAt
         {
             get;
         }
+
+        //----------------------------------------------------------------------
         public bool IsPlaylist
         {
             get;
         }
+
+        //----------------------------------------------------------------------
         public string Preview
         {
             get;
         }
+
+        //----------------------------------------------------------------------
         public Links Links
         {
             get;
         }
+
+        //----------------------------------------------------------------------
         public Channel Channel
         {
             get;
@@ -119,8 +144,10 @@ namespace Twitch.Model
         private const string scChannelString = "channel";
     }
 
+    //==========================================================================
     public class Channel
     {
+        //----------------------------------------------------------------------
         public Channel( JsonObject aJsonObject )
         {
             var theValue = aJsonObject.GetNamedValue( scMatureString );
@@ -250,106 +277,127 @@ namespace Twitch.Model
             }
         }
 
+        //----------------------------------------------------------------------
         public bool IsMature
         {
             get;
         } = false;
 
+        //----------------------------------------------------------------------
         public string Status
         {
             get;
         } = string.Empty;
 
+        //----------------------------------------------------------------------
         public string BroadcasterLanguage
         {
             get;
         } = string.Empty;
 
+        //----------------------------------------------------------------------
         public string DisplayName
         {
             get;
         } = string.Empty;
 
+        //----------------------------------------------------------------------
         public string Game
         {
             get;
         } = string.Empty;
 
+        //----------------------------------------------------------------------
         public int Delay
         {
             get;
         } = 0;
 
+        //----------------------------------------------------------------------
         public string Language
         {
             get;
         } = string.Empty;
 
+        //----------------------------------------------------------------------
         public Int64 Id
         {
             get;
         } = 0;
 
+        //----------------------------------------------------------------------
         public string Name
         {
             get;
         } = string.Empty;
 
+        //----------------------------------------------------------------------
         public DateTime CreatedAt
         {
             get;
         } = DateTime.MinValue;
 
+        //----------------------------------------------------------------------
         public DateTime UpdatedAt
         {
             get;
         } = DateTime.MinValue;
 
+        //----------------------------------------------------------------------
         public string Logo
         {
             get;
         } = string.Empty;
 
+        //----------------------------------------------------------------------
         public string Banner
         {
             get;
         } = string.Empty;
 
+        //----------------------------------------------------------------------
         public string VideoBanner
         {
             get;
         } = string.Empty;
 
+        //----------------------------------------------------------------------
         public string Background
         {
             get;
         } = string.Empty;
 
+        //----------------------------------------------------------------------
         public string ProfileBanner
         {
             get;
         } = string.Empty;
 
+        //----------------------------------------------------------------------
         public string ProfileBannerBackgroundColor
         {
             get;
         } = string.Empty;
 
+        //----------------------------------------------------------------------
         public bool IsPartner
         {
             get;
         } = false;
 
+        //----------------------------------------------------------------------
         public string Url
         {
             get;
         } = string.Empty;
 
+        //----------------------------------------------------------------------
         public Int64 Views
         {
             get;
         } = 0;
 
+        //----------------------------------------------------------------------
         public Int64 Followers
         {
             get;

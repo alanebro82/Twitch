@@ -4,8 +4,10 @@ using System.Linq;
 
 namespace Twitch.Model
 {
+    //==========================================================================
     public class M3uStream
     {
+        //----------------------------------------------------------------------
         public static IEnumerable<M3uStream> ParseM3uStreams( string aM3uString )
         {
             var theM3uList = new List<M3uStream>();
@@ -63,29 +65,34 @@ namespace Twitch.Model
             return theM3uList;
         }
 
+        //----------------------------------------------------------------------
         private M3uStream()
         {
 
         }
 
+        //----------------------------------------------------------------------
         public string DisplayName
         {
             get;
             private set;
         } = string.Empty;
 
+        //----------------------------------------------------------------------
         public Uri Uri
         {
             get;
             private set;
         }
 
+        //----------------------------------------------------------------------
         public int Bandwidth
         {
             get;
             private set;
         } = 0;
 
+        //----------------------------------------------------------------------
         public string ResolutionString
         {
             get;
