@@ -1,13 +1,12 @@
 ﻿using System;
+using GalaSoft.MvvmLight.Ioc;
 using GalaSoft.MvvmLight.Threading;
 using GalaSoft.MvvmLight.Views;
 using Microsoft.Practices.ServiceLocation;
 using Twitch.View;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
-using Windows.UI.Core;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 
 namespace Twitch
@@ -58,18 +57,6 @@ namespace Twitch
             DispatcherHelper.Initialize();
         }
 
-        private void SystemNavigationManagerBackRequested( object sender, BackRequestedEventArgs e )
-        {
-            var theRootFrame = Window.Current.Content as Frame;
-
-            if( theRootFrame != null &&
-                theRootFrame.CanGoBack )
-            {
-                e.Handled = true;
-                theRootFrame.GoBack();
-            }
-        }
-
         /// <summary>
         /// Invoked when Navigation to a certain page fails
         /// </summary>
@@ -90,8 +77,6 @@ namespace Twitch
         private void OnSuspending( object sender, SuspendingEventArgs e )
         {
             var deferral = e.SuspendingOperation.GetDeferral();
-
-            SystemNavigationManager.GetForCurrentView().BackRequested -= SystemNavigationManagerBackRequested;
 
             deferral.Complete();
         }

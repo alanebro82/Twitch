@@ -138,7 +138,7 @@ namespace Twitch
             UpdatePlayerSize();
         }
 
-        private void mClosePlayerButton_HandleClick( object sender, RoutedEventArgs e )
+        private void mClosePlayerButton_HandleTapped( object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e )
         {
             SetClosedPlayerHeight();
         }

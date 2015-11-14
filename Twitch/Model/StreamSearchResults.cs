@@ -25,7 +25,7 @@ namespace Twitch.Model
         public int Total
         {
             get;
-        }
+        } = 0;
 
         public Links Links
         {

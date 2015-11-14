@@ -44,6 +44,7 @@ namespace Twitch.View
         {
             AppShell.Current.AppFrame.Navigate( typeof( StreamResultsPage ), e.ClickedItem as Game );
         }
+
         private void mGamesGridView_HandleSizeChanged( object sender, Windows.UI.Xaml.SizeChangedEventArgs e )
         {
             var theGrid = sender as GridView;

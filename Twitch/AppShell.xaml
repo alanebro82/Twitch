@@ -33,7 +33,7 @@
                     Width="40"
                     Padding="2"
                     Foreground="White"
-                    Click="mClosePlayerButton_HandleClick"
+                    Tapped="mClosePlayerButton_HandleTapped"
                     BorderThickness="0">
 
                 <Grid>
