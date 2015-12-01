@@ -11,15 +11,13 @@
       DataContext="{Binding GameResults, Source={StaticResource Locator}}">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <GridView x:Name="mGamesGridView"
-                  Margin="0,0"
-                  ItemsSource="{Binding Games}"
+        <GridView ItemsSource="{x:Bind Vm.Games, Mode=OneWay}"
                   ShowsScrollingPlaceholders="True"
                   IncrementalLoadingTrigger="Edge"
                   SelectionMode="None"
                   IsItemClickEnabled="True"
-                  ItemClick="mGamesGridView_HandleItemClick"
-                  SizeChanged="mGamesGridView_HandleSizeChanged">
+                  ItemClick="GridView_HandleItemClick"
+                  SizeChanged="GridView_HandleSizeChanged">
             <GridView.ItemContainerStyle>
                 <Style TargetType="GridViewItem">
                     <Setter Property="Margin"
@@ -33,7 +31,7 @@
                           Width="{Binding DesiredItemWidth, ElementName=mMainPage}"
                           Height="{Binding DesiredItemHeight, ElementName=mMainPage}">
                         <Image x:Name="mImage"
-                               Source="{x:Bind ImageUrl}"
+                               Source="{x:Bind ImageUrl, Mode=OneWay}"
                                Stretch="Uniform" />
                         <TextBlock Foreground="White"
                                    FontWeight="Bold"
@@ -41,12 +39,12 @@
                                    HorizontalAlignment="Left"
                                    VerticalAlignment="Top"
                                    TextTrimming="CharacterEllipsis"
-                                   Text="{x:Bind Name}" />
+                                   Text="{x:Bind Name, Mode=OneWay}" />
                         <TextBlock Foreground="White"
                                    HorizontalAlignment="Right"
                                    VerticalAlignment="Bottom"
                                    TextTrimming="CharacterEllipsis">
-                            <Run Text="{x:Bind Viewers}" />
+                            <Run Text="{x:Bind Viewers, Mode=OneWay}" />
                             <Run Text=" viewers" />
                         </TextBlock>
                     </Grid>

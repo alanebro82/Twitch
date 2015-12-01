@@ -7,72 +7,15 @@
       xmlns:local="using:Twitch.View"
       mc:Ignorable="d">
 
-    <Grid>
-        <Frame x:Name="mFrame">
-            <Frame.ContentTransitions>
-                <TransitionCollection>
-                    <NavigationThemeTransition>
-                        <NavigationThemeTransition.DefaultNavigationTransitionInfo>
-                            <SlideNavigationTransitionInfo />
-                        </NavigationThemeTransition.DefaultNavigationTransitionInfo>
-                    </NavigationThemeTransition>
-                </TransitionCollection>
-            </Frame.ContentTransitions>
-        </Frame>
-
-        <Grid VerticalAlignment="{Binding DesiredPlayerVerticalAlignment, ElementName=Root}"
-              Height="{Binding DesiredPlayerHeight, ElementName=Root}"
-              IsHitTestVisible="True"
-              Background="Transparent">
-
-            <local:PlayerPage />
-            <Button Name="mClosePlayerButton"
-                    VerticalAlignment="Center"
-                    HorizontalAlignment="Right"
-                    Height="40"
-                    Width="40"
-                    Padding="2"
-                    Foreground="White"
-                    Tapped="mClosePlayerButton_HandleTapped"
-                    BorderThickness="0">
-
-                <Grid>
-                    <Viewbox>
-                        <Path Stroke="White"
-                              StrokeThickness="0"
-                              Fill="White">
-                            <Path.Data>
-                                <GeometryGroup FillRule="EvenOdd">
-                                    <EllipseGeometry Center="10,10"
-                                                     RadiusX="10"
-                                                     RadiusY="10" />
-                                    <EllipseGeometry Center="10,10"
-                                                     RadiusX="8"
-                                                     RadiusY="8" />
-                                </GeometryGroup>
-                            </Path.Data>
-                        </Path>
-                    </Viewbox>
-                    <Viewbox>
-                        <Path Stroke="White"
-                              StrokeThickness="0"
-                              Height="10"
-                              Width="10"
-                              Fill="White"
-                              Data="M2.5,3.5
-                                    A0.25,0.25 45 1 1 3.5,2.5
-                                    L7.5,6.5
-                                    A0.25,0.25 45 1 1 6.5,7.5z
-                                    M2.5,6.5
-                                    A0.25,0.25 45 1 0 3.5,7.5
-                                    L7.5,3.5
-                                    A0.25,0.25 45 1 0 6.5,2.5z
-                                    M5,4 L6,5 L5,6 L4,5z"/>
-                    </Viewbox>
-                </Grid>
-
-            </Button>
-        </Grid>
-
-    </Grid>
+    <Frame x:Name="mFrame">
+        <Frame.ContentTransitions>
+            <TransitionCollection>
+                <NavigationThemeTransition>
+                    <NavigationThemeTransition.DefaultNavigationTransitionInfo>
+                        <SlideNavigationTransitionInfo />
+                    </NavigationThemeTransition.DefaultNavigationTransitionInfo>
+                </NavigationThemeTransition>
+            </TransitionCollection>
+        </Frame.ContentTransitions>
+    </Frame>
 </Page>

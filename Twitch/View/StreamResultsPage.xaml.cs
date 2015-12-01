@@ -52,14 +52,13 @@ namespace Twitch.View
         //----------------------------------------------------------------------
 
         //----------------------------------------------------------------------
-        private async void mStreamsGridView_HandleItemClick( object sender, ItemClickEventArgs e )
+        private void GridView_HandleItemClick( object sender, ItemClickEventArgs e )
         {
-            AppShell.SetFullPlayerHeight();
-            await ServiceLocator.Current.GetInstance<PlayerViewModel>().Play( e.ClickedItem as Stream );
+            AppShell.Current.AppFrame.Navigate( typeof( PlayerPage ), e.ClickedItem as Stream );
         }
 
         //----------------------------------------------------------------------
-        private void mStreamsGridView_HandleSizeChanged( object sender, Windows.UI.Xaml.SizeChangedEventArgs e )
+        private void GridView_HandleSizeChanged( object sender, Windows.UI.Xaml.SizeChangedEventArgs e )
         {
             var theGrid = sender as GridView;
             if( theGrid == null )

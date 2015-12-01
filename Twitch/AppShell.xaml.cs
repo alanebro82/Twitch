@@ -1,6 +1,4 @@
-﻿using Microsoft.Practices.ServiceLocation;
-using Twitch.ViewModel;
-using Windows.UI.Core;
+﻿using Windows.UI.Core;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -24,58 +22,6 @@ namespace Twitch
         public static AppShell Current = null;
 
         //----------------------------------------------------------------------
-        // PUBLIC STATIC FUNCTIONS
-        //----------------------------------------------------------------------
-
-        //----------------------------------------------------------------------
-        public static void SetClosedPlayerHeight()
-        {
-            if( Current.AppFrame != null )
-            {
-                Current.AppFrame.Visibility = Visibility.Visible;
-            }
-            Current.DesiredPlayerVerticalAlignment = VerticalAlignment.Bottom;
-            Current.DesiredPlayerHeight = 0;
-            UpdatePlayerSize();
-            Current.mClosePlayerButton.Visibility = Visibility.Collapsed;
-            ServiceLocator.Current.GetInstance<PlayerViewModel>().Stop();
-
-            UpdateBackButtonVisibility();
-        }
-
-        //----------------------------------------------------------------------
-        public static void SetSplitPlayerHeight()
-        {
-            if( Current.AppFrame != null )
-            {
-                Current.AppFrame.Visibility = Visibility.Visible;
-            }
-
-            Current.DesiredPlayerVerticalAlignment = VerticalAlignment.Bottom;
-            Current.DesiredPlayerHeight = 200;
-            UpdatePlayerSize();
-            Current.mClosePlayerButton.Visibility = Visibility.Visible;
-
-            UpdateBackButtonVisibility();
-        }
-
-        //----------------------------------------------------------------------
-        public static void SetFullPlayerHeight()
-        {
-            if( Current.AppFrame != null )
-            {
-                Current.AppFrame.Visibility = Visibility.Collapsed;
-            }
-
-            Current.DesiredPlayerVerticalAlignment = VerticalAlignment.Stretch;
-            Current.DesiredPlayerHeight = ( Current.AppFrame.Parent as FrameworkElement ).Height;
-            UpdatePlayerSize();
-            Current.mClosePlayerButton.Visibility = Visibility.Collapsed;
-
-            UpdateBackButtonVisibility();
-        }
-
-        //----------------------------------------------------------------------
         // PUBLIC METHODS
         //----------------------------------------------------------------------
 
@@ -91,7 +37,6 @@ namespace Twitch
 
             SystemNavigationManager.GetForCurrentView().BackRequested += HandleBackRequested;
             Window.Current.CoreWindow.KeyDown += HandleKeyDown;
-            Window.Current.CoreWindow.SizeChanged += HandleWindowResized;
         }
 
         //----------------------------------------------------------------------
@@ -130,27 +75,7 @@ namespace Twitch
                 {
                     theCurrentView.ExitFullScreenMode();
                 }
-                else if( DesiredPlayerVerticalAlignment == VerticalAlignment.Stretch )
-                {
-                    SetSplitPlayerHeight();
-                }
-                else if( DesiredPlayerHeight != 0 )
-                {
-                    SetClosedPlayerHeight();
-                }
             }
-        }
-
-        //----------------------------------------------------------------------
-        private void HandleWindowResized( CoreWindow sender, WindowSizeChangedEventArgs args )
-        {
-            UpdatePlayerSize();
-        }
-
-        //----------------------------------------------------------------------
-        private void mClosePlayerButton_HandleTapped( object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e )
-        {
-            SetClosedPlayerHeight();
         }
 
         //----------------------------------------------------------------------
@@ -166,16 +91,7 @@ namespace Twitch
                 return;
             }
 
-            if( DesiredPlayerVerticalAlignment == VerticalAlignment.Stretch )
-            {
-                if( ApplicationView.GetForCurrentView().IsFullScreenMode )
-                {
-                    ApplicationView.GetForCurrentView().ExitFullScreenMode();
-                }
-                SetSplitPlayerHeight();
-                aHandled = true;
-            }
-            else if( AppFrame.CanGoBack && !aHandled )
+            if( AppFrame.CanGoBack && !aHandled )
             {
                 // If not, set the event to handled and go back to the previous page in the app.
                 aHandled = true;
@@ -186,36 +102,11 @@ namespace Twitch
         }
 
         //----------------------------------------------------------------------
-        private static void UpdatePlayerSize()
-        {
-            switch( Current.DesiredPlayerVerticalAlignment )
-            {
-                case VerticalAlignment.Bottom:
-                    if( Current.DesiredPlayerHeight != 0 )
-                    {
-                        Current.DesiredPlayerHeight = Window.Current.Bounds.Height * 0.3;
-                    }
-                    break;
-                case VerticalAlignment.Stretch:
-                    Current.DesiredPlayerHeight = ( Current.AppFrame.Parent as FrameworkElement ).Height;
-                    break;
-                case VerticalAlignment.Center:
-                case VerticalAlignment.Top:
-                default:
-                    break;
-            }
-        }
-
-        //----------------------------------------------------------------------
         private static void UpdateBackButtonVisibility()
         {
             var theNavManager = SystemNavigationManager.GetForCurrentView();
-            if( Current.DesiredPlayerVerticalAlignment == VerticalAlignment.Stretch )
-            {
-                theNavManager.AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
-            }
-            else if( Current.AppFrame != null &&
-                     Current.AppFrame.CanGoBack )
+            if( Current.AppFrame != null &&
+                Current.AppFrame.CanGoBack )
             {
                 theNavManager.AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
             }
@@ -224,28 +115,5 @@ namespace Twitch
                 theNavManager.AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
             }
         }
-
-        //----------------------------------------------------------------------
-        // PUBLIC DEPENDENCY PROPERTIES
-        //----------------------------------------------------------------------
-
-        //----------------------------------------------------------------------
-        public VerticalAlignment DesiredPlayerVerticalAlignment
-        {
-            get { return (VerticalAlignment)GetValue( DesiredPlayerVerticalAlignmentProperty ); }
-            set { SetValue( DesiredPlayerVerticalAlignmentProperty, value ); }
-        }
-        public static readonly DependencyProperty DesiredPlayerVerticalAlignmentProperty =
-            DependencyProperty.Register( "DesiredPlayerVerticalAlignment", typeof( VerticalAlignment ), typeof( AppShell ), new PropertyMetadata( VerticalAlignment.Bottom ) );
-
-        //----------------------------------------------------------------------
-        public double DesiredPlayerHeight
-        {
-            get { return (double)GetValue( DesiredPlayerHeightProperty ); }
-            set { SetValue( DesiredPlayerHeightProperty, value ); }
-        }
-        public static readonly DependencyProperty DesiredPlayerHeightProperty =
-            DependencyProperty.Register( "DesiredPlayerHeight", typeof( double ), typeof( AppShell ), new PropertyMetadata( 0.0 ) );
-
     }
 }

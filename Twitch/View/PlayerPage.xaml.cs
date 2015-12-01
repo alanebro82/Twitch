@@ -1,10 +1,12 @@
 ﻿// The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
 using Microsoft.PlayerFramework;
+using Twitch.Model;
 using Twitch.ViewModel;
 using Windows.UI.Core;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Navigation;
 
 namespace Twitch.View
 {
@@ -31,6 +33,15 @@ namespace Twitch.View
             this.InitializeComponent();
 
             Window.Current.SizeChanged += HandleWindowResized;
+        }
+
+        //----------------------------------------------------------------------
+        protected override async void OnNavigatedTo( NavigationEventArgs e )
+        {
+            base.OnNavigatedTo( e );
+
+            SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
+            await Vm.Play( e.Parameter as Stream );
         }
 
         //----------------------------------------------------------------------
@@ -70,7 +81,6 @@ namespace Twitch.View
             if( thePlayer.IsFullScreen )
             {
                 ApplicationView.GetForCurrentView().TryEnterFullScreenMode();
-                AppShell.SetFullPlayerHeight();
             }
             else
             {

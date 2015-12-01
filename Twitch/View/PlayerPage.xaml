@@ -14,37 +14,31 @@
 
     <Grid>
         <mmppf:MediaPlayer x:Name="mMediaElement"
+                           IsAudioSelectionEnabled="False"
+                           IsAudioSelectionVisible="False"
+                           IsCastingEnabled="False"
+                           IsCastVisible="False"
+                           IsFullScreenChanged="mMediaElement_HandleFullScreenChanged"
+                           IsFullScreenEnabled="True"
+                           IsFullScreenVisible="True"
+                           IsInteractive="False"
+                           IsPauseEnabled="False"
+                           IsPlayPauseVisible="False"
                            IsScrubbingEnabled="False"
                            IsSeekEnabled="False"
                            IsSkipAheadEnabled="False"
                            IsSkipAheadVisible="False"
                            IsSkipBackEnabled="False"
                            IsSkipBackVisible="False"
-                           IsAudioSelectionEnabled="False"
-                           IsAudioSelectionVisible="False"
-                           IsCastingEnabled="False"
-                           IsCastVisible="False"
                            IsTimelineVisible="False"
-                           IsTimeRemainingVisible="False"
                            IsTimeElapsedVisible="False"
-                           IsFullScreenEnabled="True"
-                           IsFullScreenVisible="True"
-                           IsFullScreenChanged="mMediaElement_HandleFullScreenChanged"
-                           IsPauseEnabled="False"
-                           IsPlayPauseVisible="False"
+                           IsTimeRemainingVisible="False"
                            InteractiveActivationMode="All"
                            InteractiveDeactivationMode="All"
                            DoubleTapped="mMediaElement_HandleDoubleTapped"
-                           Source="{Binding SelectedStreamLocation.Uri}">
-            <mmppf:MediaPlayer.ControlPanelTemplate>
-                <ControlTemplate>
-                    
-                </ControlTemplate>
-            </mmppf:MediaPlayer.ControlPanelTemplate>
-        </mmppf:MediaPlayer>
+                           Source="{x:Bind Vm.SelectedStreamLocation.Uri, Mode=OneWay}" />
 
         <!-- Stream Selection -->
-        <!--
         <ComboBox HorizontalAlignment="Right"
                   VerticalAlignment="Top"
                   Width="100"
@@ -62,6 +56,5 @@
                 </DataTemplate>
             </ComboBox.ItemTemplate>
         </ComboBox>
-        -->
     </Grid>
 </Page>

@@ -45,13 +45,13 @@ namespace Twitch.View
         //----------------------------------------------------------------------
 
         //----------------------------------------------------------------------
-        private void mGamesGridView_HandleItemClick( object sender, ItemClickEventArgs e )
+        private void GridView_HandleItemClick( object sender, ItemClickEventArgs e )
         {
             AppShell.Current.AppFrame.Navigate( typeof( StreamResultsPage ), e.ClickedItem as Game );
         }
 
         //----------------------------------------------------------------------
-        private void mGamesGridView_HandleSizeChanged( object sender, Windows.UI.Xaml.SizeChangedEventArgs e )
+        private void GridView_HandleSizeChanged( object sender, Windows.UI.Xaml.SizeChangedEventArgs e )
         {
             var theGrid = sender as GridView;
             if( theGrid == null )

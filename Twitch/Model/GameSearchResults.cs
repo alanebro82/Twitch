@@ -95,23 +95,6 @@ namespace Twitch.Model
         }
 
         //----------------------------------------------------------------------
-        public override bool Equals( object aOther )
-        {
-            if( aOther is Game )
-            {
-                return ( (Game)aOther ).Name == Name;
-            }
-
-            return false;
-        }
-
-        //----------------------------------------------------------------------
-        public override int GetHashCode()
-        {
-            return 17 * Name.GetHashCode();
-        }
-
-        //----------------------------------------------------------------------
         public int Viewers
         {
             get;

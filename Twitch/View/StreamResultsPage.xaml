@@ -16,19 +16,20 @@
         </Grid.RowDefinitions>
 
         <TextBlock Grid.Row="0"
-                   Text="{Binding Game.Name}" />
+                   Text="{x:Bind Vm.Game.Name, Mode=OneWay}"
+                   FontSize="30"
+                   FontWeight="Bold"
+                   TextTrimming="CharacterEllipsis" />
 
         <GridView Grid.Row="1"
-                  x:Name="mStreamsGridView"
-                  Margin="5,0"
                   ShowsScrollingPlaceholders="True"
-                  ItemsSource="{Binding Streams}"
+                  ItemsSource="{x:Bind Vm.Streams, Mode=OneWay}"
                   DataFetchSize="1"
                   IncrementalLoadingTrigger="Edge"
                   SelectionMode="None"
                   IsItemClickEnabled="True"
-                  ItemClick="mStreamsGridView_HandleItemClick"
-                  SizeChanged="mStreamsGridView_HandleSizeChanged">
+                  ItemClick="GridView_HandleItemClick"
+                  SizeChanged="GridView_HandleSizeChanged">
             <GridView.ItemContainerStyle>
                 <Style TargetType="GridViewItem">
                     <Setter Property="Margin"
@@ -42,7 +43,7 @@
                           Width="{Binding DesiredItemWidth, ElementName=mStreamResultsPage}"
                           Height="{Binding DesiredItemHeight, ElementName=mStreamResultsPage}">
                         <Image x:Name="mImage"
-                               Source="{x:Bind Preview}"
+                               Source="{x:Bind Preview, Mode=OneWay}"
                                Stretch="Uniform" />
                         <TextBlock Foreground="White"
                                    FontWeight="Bold"
@@ -50,7 +51,7 @@
                                    HorizontalAlignment="Left"
                                    VerticalAlignment="Top"
                                    TextTrimming="CharacterEllipsis"
-                                   Text="{x:Bind Channel.DisplayName}" />
+                                   Text="{x:Bind Channel.DisplayName, Mode=OneWay}" />
                         <Grid HorizontalAlignment="Stretch"
                               VerticalAlignment="Bottom">
                             <Grid.ColumnDefinitions>
@@ -62,12 +63,12 @@
                                        FontWeight="Bold"
                                        FontSize="20"
                                        TextTrimming="CharacterEllipsis"
-                                       Text="{x:Bind Channel.Status}" />
+                                       Text="{x:Bind Channel.Status, Mode=OneWay}" />
                             <TextBlock Grid.Column="1"
                                        Foreground="White"
                                        TextTrimming="CharacterEllipsis"
                                        VerticalAlignment="Bottom">
-                                <Run Text="{x:Bind Viewers}" />
+                                <Run Text="{x:Bind Viewers, Mode=OneWay}" />
                                 <Run Text=" viewers" />
                             </TextBlock>
                         </Grid>
