@@ -49,9 +49,13 @@ namespace Twitch.ViewModel
         //----------------------------------------------------------------------
         public void Stop()
         {
+            mIsStopping = true;
+
             SelectedStreamLocation = null;
             mStreamLocationList.Clear();
             CurrentStream = null;
+
+            mIsStopping = false;
         }
 
         //----------------------------------------------------------------------
@@ -88,6 +92,12 @@ namespace Twitch.ViewModel
             }
             set
             {
+                if( !mIsStopping && value == null )
+                {
+                    // bindings fire when player re-lays out, causing stuttering
+                    return;
+                }
+
                 Set( nameof( SelectedStreamLocation ), ref mSelectedStreamLocation, value );
             }
         }
@@ -112,6 +122,7 @@ namespace Twitch.ViewModel
         //----------------------------------------------------------------------
 
         private readonly ITwitchQueryService mTwitchQueryService;
+        private bool mIsStopping = false;
 
     }
 }
