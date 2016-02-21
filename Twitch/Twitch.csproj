@@ -166,8 +166,8 @@
     <SDKReference Include="BehaviorsXamlSDKManaged, Version=12.0">
       <Name>Behaviors SDK %28XAML%29</Name>
     </SDKReference>
-    <SDKReference Include="Microsoft.PlayerFramework.Xaml.UWP, Version=3.0.0.2">
-      <Name>Microsoft Player Framework %28Microsoft.PlayerFramework.Xaml.UWP, Version=3.0.0.2%29</Name>
+    <SDKReference Include="Microsoft.PlayerFramework.Xaml.UWP, Version=3.0.0.4">
+      <Name>Microsoft Player Framework %28Microsoft.PlayerFramework.Xaml.UWP, Version=3.0.0.4%29</Name>
     </SDKReference>
   </ItemGroup>
   <ItemGroup>
