@@ -1,6 +1,4 @@
-﻿// The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
-
-using Microsoft.PlayerFramework;
+﻿using Microsoft.PlayerFramework;
 using Twitch.Model;
 using Twitch.ViewModel;
 using Windows.UI.Core;
@@ -31,8 +29,6 @@ namespace Twitch.View
         public PlayerPage()
         {
             this.InitializeComponent();
-
-            Window.Current.SizeChanged += HandleWindowResized;
         }
 
         //----------------------------------------------------------------------
@@ -40,8 +36,18 @@ namespace Twitch.View
         {
             base.OnNavigatedTo( e );
 
+            Window.Current.SizeChanged += HandleWindowResized;
             SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
             await Vm.Play( e.Parameter as Stream );
+        }
+
+        //----------------------------------------------------------------------
+        protected override void OnNavigatedFrom( NavigationEventArgs e )
+        {
+            base.OnNavigatedFrom( e );
+
+            Window.Current.SizeChanged -= HandleWindowResized;
+            ApplicationView.GetForCurrentView().ExitFullScreenMode();
         }
 
         //----------------------------------------------------------------------
