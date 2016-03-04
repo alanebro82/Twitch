@@ -1,5 +1,4 @@
 ﻿using System;
-using Microsoft.Practices.ServiceLocation;
 using Twitch.Model;
 using Twitch.ViewModel;
 using Windows.UI.Core;

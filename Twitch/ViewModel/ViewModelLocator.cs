@@ -2,7 +2,6 @@
 using GalaSoft.MvvmLight.Views;
 using Microsoft.Practices.ServiceLocation;
 using Twitch.Services;
-using Twitch.View;
 
 namespace Twitch.ViewModel
 {

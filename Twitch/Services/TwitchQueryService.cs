@@ -2,8 +2,6 @@
 using System.Threading.Tasks;
 using Twitch.Model;
 using Windows.Data.Json;
-using Windows.Storage;
-using Windows.Storage.Streams;
 using Windows.Web.Http;
 
 namespace Twitch.Services
@@ -45,18 +43,6 @@ namespace Twitch.Services
         //----------------------------------------------------------------------
         // PRIVATE METHODS
         //----------------------------------------------------------------------
-
-        private async Task<StorageFile> SaveStringToFile( string aFilename, IBuffer aContent )
-        {
-            var theFile = await ApplicationData.Current.TemporaryFolder.CreateFileAsync( aFilename, CreationCollisionOption.ReplaceExisting );
-
-            using( var theStream = await theFile.OpenAsync( FileAccessMode.ReadWrite ) )
-            {
-                await theStream.WriteAsync( aContent );
-            }
-
-            return theFile;
-        }
 
         private Uri GamesListUri( uint aOffset, uint aSize )
         {
