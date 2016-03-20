@@ -108,6 +108,8 @@
                             <!-- Stream Selection -->
                             <ComboBox HorizontalAlignment="Right"
                                       VerticalAlignment="Top"
+                                      Foreground="{ThemeResource AppBarItemForegroundThemeBrush}"
+                                      BorderBrush="{ThemeResource AppBarItemForegroundThemeBrush}"
                                       Width="200"
                                       Margin="10"
                                       DataContext="{Binding Player, Source={StaticResource Locator}}"

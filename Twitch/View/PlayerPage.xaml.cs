@@ -1,4 +1,5 @@
-﻿using Microsoft.PlayerFramework;
+﻿using System;
+using Microsoft.PlayerFramework;
 using Twitch.Model;
 using Twitch.ViewModel;
 using Windows.UI.Core;
@@ -29,6 +30,9 @@ namespace Twitch.View
         public PlayerPage()
         {
             this.InitializeComponent();
+
+            mTimer.Interval = TimeSpan.FromSeconds( 2 );
+            mTimer.Tick += HandleTimerTick;
         }
 
         //----------------------------------------------------------------------
@@ -38,6 +42,10 @@ namespace Twitch.View
 
             Window.Current.SizeChanged += HandleWindowResized;
             SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
+            PointerMoved += HandlePointerMoved;
+
+            mTimer.Start();
+
             await Vm.Play( e.Parameter as Stream );
         }
 
@@ -48,6 +56,9 @@ namespace Twitch.View
 
             Window.Current.SizeChanged -= HandleWindowResized;
             ApplicationView.GetForCurrentView().ExitFullScreenMode();
+            PointerMoved -= HandlePointerMoved;
+
+            mTimer.Stop();
         }
 
         //----------------------------------------------------------------------
@@ -97,5 +108,26 @@ namespace Twitch.View
             mMediaElement.IsFullScreen = !mMediaElement.IsFullScreen;
         }
 
+        //----------------------------------------------------------------------
+        private void HandleTimerTick( object sender, object e )
+        {
+            CoreWindow.GetForCurrentThread().PointerCursor = null;
+        }
+
+        //----------------------------------------------------------------------
+        private void HandlePointerMoved( object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e )
+        {
+            if( CoreWindow.GetForCurrentThread().PointerCursor == null )
+            {
+                CoreWindow.GetForCurrentThread().PointerCursor = new CoreCursor( CoreCursorType.Arrow, 1 );
+            }
+            mTimer.Start();
+        }
+
+        //----------------------------------------------------------------------
+        // PRIVATE DATA
+        //----------------------------------------------------------------------
+
+        private readonly DispatcherTimer mTimer = new DispatcherTimer();
     }
 }
