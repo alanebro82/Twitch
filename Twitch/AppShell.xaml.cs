@@ -19,7 +19,15 @@ namespace Twitch
         // PUBLIC STATIC MEMBERS
         //----------------------------------------------------------------------
 
-        public static AppShell Current = null;
+        //----------------------------------------------------------------------
+        /// <summary>
+        /// Current frame, used for navigating.
+        /// </summary>
+        public static AppShell Current
+        {
+            get;
+            private set;
+        }
 
         //----------------------------------------------------------------------
         // PUBLIC METHODS
@@ -30,10 +38,7 @@ namespace Twitch
         {
             InitializeComponent();
 
-            Loaded += ( sender, args ) =>
-            {
-                Current = this;
-            };
+            Current = this;
 
             SystemNavigationManager.GetForCurrentView().BackRequested += HandleBackRequested;
             Window.Current.CoreWindow.KeyDown += HandleKeyDown;

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Twitch.Model;
 using Windows.Data.Json;
@@ -29,14 +30,17 @@ namespace Twitch.Services
             }
         }
 
-        public async Task<string> GetChannel( string aChannelName )
+        public async Task<IEnumerable<M3uStream>> GetChannel( string aChannelName )
         {
             using( var theHttpClient = new HttpClient() )
             {
                 var theAccessTokenJson = JsonObject.Parse( await theHttpClient.GetStringAsync( TokenRequestUri( aChannelName ) ) );
                 var theTokenJson = JsonObject.Parse( theAccessTokenJson.GetNamedString( "token" ) );
 
-                return await theHttpClient.GetStringAsync( StreamRequestUri( aChannelName, theTokenJson, theAccessTokenJson.GetNamedString( "sig" ) ) );
+                var theStream = StreamRequestUri( aChannelName, theTokenJson, theAccessTokenJson.GetNamedString( "sig" ) );
+                var theM3uData = await theHttpClient.GetStringAsync( theStream );
+
+                return M3uStream.ParseM3uStreams( theM3uData, theStream );
             }
         }
 

@@ -10,6 +10,11 @@ namespace Twitch.View.Converter
         {
             var theValue = System.Convert.ToDouble( aValue );
 
+            if( theValue <= 0.0 )
+            {
+                return "Variable";
+            }
+
             int thePrefixCount = 0;
             while( theValue > 1024 )
             {

@@ -8,9 +8,9 @@ namespace Twitch.Model
     public class M3uStream
     {
         //----------------------------------------------------------------------
-        public static IEnumerable<M3uStream> ParseM3uStreams( string aM3uString )
+        public static IEnumerable<M3uStream> ParseM3uStreams( string aM3uString, Uri aM3uLocation )
         {
-            var theM3uList = new List<M3uStream>();
+            var theM3uList = new List<M3uStream>() { new M3uStream() { DisplayName = "Auto", Uri = aM3uLocation, Bandwidth = 0, ResolutionString = "Variable" } };
 
             var theLines = aM3uString.Split( new string[] { "\r\n", "\n" }, StringSplitOptions.None );
             foreach( var theLine in theLines )

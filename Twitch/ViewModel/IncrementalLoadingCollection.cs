@@ -74,7 +74,7 @@ namespace Twitch.ViewModel
         //----------------------------------------------------------------------
 
         private uint mItemsLoaded = 0;
-        Func<uint, uint, Task<IEnumerable<I>>> mLoadingFunction;
+        private readonly Func<uint, uint, Task<IEnumerable<I>>> mLoadingFunction;
 
     }
 }

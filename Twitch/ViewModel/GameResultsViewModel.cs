@@ -24,7 +24,7 @@ namespace Twitch.ViewModel
         public void Init()
         {
             mGames = new IncrementalLoadingCollection<Game>( GetGames );
-            RaisePropertyChanged( nameof( Games ) );
+            RaisePropertyChanged( () => Games );
         }
 
         //----------------------------------------------------------------------

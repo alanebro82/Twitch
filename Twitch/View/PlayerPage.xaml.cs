@@ -57,7 +57,8 @@ namespace Twitch.View
         //----------------------------------------------------------------------
         private void HandleWindowResized( object sender, WindowSizeChangedEventArgs e )
         {
-            if( ApplicationView.GetForCurrentView().IsFullScreenMode && mMediaElement.IsFullScreen )
+            if( ApplicationView.GetForCurrentView().IsFullScreenMode && mMediaElement.IsFullScreen ||
+                !ApplicationView.GetForCurrentView().IsFullScreenMode && !mMediaElement.IsFullScreen )
             {
                 // do nothing
             }
@@ -68,10 +69,6 @@ namespace Twitch.View
             else if( !ApplicationView.GetForCurrentView().IsFullScreenMode && mMediaElement.IsFullScreen )
             {
                 mMediaElement.IsFullScreen = false;
-            }
-            else if( !ApplicationView.GetForCurrentView().IsFullScreenMode && !mMediaElement.IsFullScreen )
-            {
-                // do nothing
             }
         }
 

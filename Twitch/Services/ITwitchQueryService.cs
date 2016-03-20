@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Twitch.Model;
 
 namespace Twitch.Services
@@ -8,6 +9,6 @@ namespace Twitch.Services
     {
         Task<GameSearchResults> GetGames( uint aOffset, uint aSize );
         Task<StreamSearchResults> GetChannels( string aGame, uint aOffset, uint aSize );
-        Task<string> GetChannel( string aChannelName );
+        Task<IEnumerable<M3uStream>> GetChannel( string aChannelName );
     }
 }

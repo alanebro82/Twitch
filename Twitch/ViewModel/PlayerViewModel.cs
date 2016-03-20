@@ -37,7 +37,7 @@ namespace Twitch.ViewModel
             }
 
             CurrentStream = aStream;
-            var theM3uStreams = M3uStream.ParseM3uStreams( await mTwitchQueryService.GetChannel( CurrentStream.Channel.Name ) );
+            var theM3uStreams =await mTwitchQueryService.GetChannel( CurrentStream.Channel.Name );
             mStreamLocationList.Clear();
             foreach( var theM3uStream in theM3uStreams )
             {
