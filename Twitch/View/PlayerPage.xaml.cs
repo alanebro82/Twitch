@@ -59,6 +59,9 @@ namespace Twitch.View
             PointerMoved -= HandlePointerMoved;
 
             mTimer.Stop();
+
+            // ensure mouse is visible
+            ResetPointer();
         }
 
         //----------------------------------------------------------------------
@@ -117,11 +120,17 @@ namespace Twitch.View
         //----------------------------------------------------------------------
         private void HandlePointerMoved( object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e )
         {
+            ResetPointer();
+            mTimer.Start();
+        }
+
+        //----------------------------------------------------------------------
+        private static void ResetPointer()
+        {
             if( CoreWindow.GetForCurrentThread().PointerCursor == null )
             {
                 CoreWindow.GetForCurrentThread().PointerCursor = new CoreCursor( CoreCursorType.Arrow, 1 );
             }
-            mTimer.Start();
         }
 
         //----------------------------------------------------------------------
