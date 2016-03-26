@@ -4,7 +4,6 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using Windows.Foundation;
-using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Data;
 
@@ -46,6 +45,65 @@ namespace Twitch.ViewModel
         }
 
         //----------------------------------------------------------------------
+        // PUBLIC ISupportIncrementalLoading
+        //----------------------------------------------------------------------
+
+        //----------------------------------------------------------------------
+        public bool HasMoreItems
+        {
+            get;
+            private set;
+        } = true;
+
+        //----------------------------------------------------------------------
+        public IAsyncOperation<LoadMoreItemsResult> LoadMoreItemsAsync( uint aCount )
+        {
+            return LoadMoreItemsAsyncImpl( aCount ).AsAsyncOperation();
+        }
+
+        //----------------------------------------------------------------------
+        // PRIVATE METHODS
+        //----------------------------------------------------------------------
+
+        //----------------------------------------------------------------------
+        private async Task<LoadMoreItemsResult> LoadMoreItemsAsyncImpl( uint aCount )
+        {
+            uint theLoadedItemCount;
+            lock ( mLock )
+            {
+                theLoadedItemCount = mItemsLoaded;
+            }
+
+            var theResult = await mLoadingFunction( theLoadedItemCount, aCount );
+
+            uint theResultCount = 0;
+
+            if( theResult == null || !theResult.Any() )
+            {
+                HasMoreItems = false;
+            }
+            else
+            {
+                theResultCount = (uint)theResult.Count();
+                lock ( mLock )
+                {
+                    mItemsLoaded += theResultCount;
+
+                    var theKeys = this.Select( ( aItem ) => aItem.Key );
+                    foreach( I item in theResult )
+                    {
+                        if( !theKeys.Contains( item.Key ) )
+                        {
+                            Add( item );
+                        }
+                    }
+                }
+            }
+
+            return new LoadMoreItemsResult { Count = theResultCount };
+        }
+
+        //----------------------------------------------------------------------
 #pragma warning disable S3168 // "async" methods should not return "void"
         private async void HandleUpdateTimerTick( object sender, object e )
 #pragma warning restore S3168 // "async" methods should not return "void"
@@ -69,68 +127,6 @@ namespace Twitch.ViewModel
             }
 
             mUpdateTimer.Start();
-        }
-
-        //----------------------------------------------------------------------
-        // PUBLIC ISupportIncrementalLoading
-        //----------------------------------------------------------------------
-
-        //----------------------------------------------------------------------
-        public bool HasMoreItems
-        {
-            get;
-            private set;
-        } = true;
-
-        //----------------------------------------------------------------------
-        public IAsyncOperation<LoadMoreItemsResult> LoadMoreItemsAsync( uint aCount )
-        {
-            var theDispatcher = Window.Current.Dispatcher;
-
-            return Task.Run( async () =>
-            {
-                uint theLoadedItemCount;
-                lock ( mLock )
-                {
-                    theLoadedItemCount = mItemsLoaded;
-                }
-
-                var theResult = await mLoadingFunction( theLoadedItemCount, aCount );
-
-                uint theResultCount = 0;
-
-                if( theResult == null || !theResult.Any() )
-                {
-                    HasMoreItems = false;
-                }
-                else
-                {
-                    theResultCount = (uint)theResult.Count();
-                    lock( mLock )
-                    {
-                        mItemsLoaded += theResultCount;
-                    }
-
-                    await theDispatcher.RunAsync(
-                        CoreDispatcherPriority.Normal,
-                        () =>
-                        {
-                            lock ( mLock )
-                            {
-                                var theKeys = this.Select( ( aItem ) => aItem.Key );
-                                foreach( I item in theResult )
-                                {
-                                    if( !theKeys.Contains( item.Key ) )
-                                    {
-                                        Add( item );
-                                    }
-                                }
-                            }
-                        } );
-                }
-
-                return new LoadMoreItemsResult() { Count = theResultCount };
-            } ).AsAsyncOperation();
         }
 
         //----------------------------------------------------------------------
