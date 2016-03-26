@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using GalaSoft.MvvmLight;
@@ -24,6 +25,7 @@ namespace Twitch.ViewModel
         public override void Cleanup()
         {
             Streams = null;
+            Game = null;
             base.Cleanup();
         }
 
@@ -58,7 +60,7 @@ namespace Twitch.ViewModel
             {
                 if( Set( nameof( Game ), ref mGame, value ) )
                 {
-                    Streams = new IncrementalLoadingCollection<Stream>( GetStreams );
+                    Streams = new IncrementalLoadingCollection<Stream>( GetStreams, TimeSpan.FromSeconds( 30 ) );
                 }
             }
         }
@@ -73,7 +75,11 @@ namespace Twitch.ViewModel
             }
             set
             {
-                Set( nameof( Streams ), ref mStreams, value );
+                var theOldVal = mStreams;
+                if( Set( nameof( Streams ), ref mStreams, value ) && theOldVal != null )
+                {
+                    theOldVal.Dispose();
+                }
             }
         }
         private IncrementalLoadingCollection<Stream> mStreams;

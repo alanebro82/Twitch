@@ -29,7 +29,7 @@ namespace Twitch.View
         //----------------------------------------------------------------------
         public PlayerPage()
         {
-            this.InitializeComponent();
+            InitializeComponent();
 
             mTimer.Interval = TimeSpan.FromSeconds( 2 );
             mTimer.Tick += HandleTimerTick;
@@ -53,6 +53,8 @@ namespace Twitch.View
         protected override void OnNavigatedFrom( NavigationEventArgs e )
         {
             base.OnNavigatedFrom( e );
+
+            Vm.Cleanup();
 
             Window.Current.SizeChanged -= HandleWindowResized;
             ApplicationView.GetForCurrentView().ExitFullScreenMode();

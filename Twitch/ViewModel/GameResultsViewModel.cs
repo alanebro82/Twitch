@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using GalaSoft.MvvmLight;
 using Twitch.Model;
@@ -23,14 +24,14 @@ namespace Twitch.ViewModel
         //----------------------------------------------------------------------
         public void Init()
         {
-            mGames = new IncrementalLoadingCollection<Game>( GetGames );
+            Games = new IncrementalLoadingCollection<Game>( GetGames, TimeSpan.FromSeconds( 30 ) );
             RaisePropertyChanged( () => Games );
         }
 
         //----------------------------------------------------------------------
         public override void Cleanup()
         {
-            mGames = null;
+            Games = null;
             base.Cleanup();
         }
 
@@ -54,6 +55,15 @@ namespace Twitch.ViewModel
             get
             {
                 return mGames;
+            }
+            private set
+            {
+                var theOldVal = mGames;
+                if( value != theOldVal && theOldVal != null )
+                {
+                    theOldVal.Dispose();
+                }
+                mGames = value;
             }
         }
         private IncrementalLoadingCollection<Game> mGames;

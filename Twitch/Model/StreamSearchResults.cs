@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Twitch.ViewModel;
 using Windows.Data.Json;
 
 namespace Twitch.Model
@@ -47,7 +48,7 @@ namespace Twitch.Model
     }
 
     //==========================================================================
-    public class Stream
+    public class Stream : IUniqueId
     {
         //----------------------------------------------------------------------
         public Stream( JsonObject aJsonObject )
@@ -129,6 +130,15 @@ namespace Twitch.Model
         public Channel Channel
         {
             get;
+        }
+
+        //----------------------------------------------------------------------
+        public string Key
+        {
+            get
+            {
+                return Id.ToString();
+            }
         }
 
         private const string scIdString = "_id";

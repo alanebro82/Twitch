@@ -41,6 +41,13 @@ namespace Twitch.View
         }
 
         //----------------------------------------------------------------------
+        protected override void OnNavigatedFrom( NavigationEventArgs e )
+        {
+            Vm.Cleanup();
+            base.OnNavigatedFrom( e );
+        }
+
+        //----------------------------------------------------------------------
         // PRIVATE EVENT HANDLERS
         //----------------------------------------------------------------------
 

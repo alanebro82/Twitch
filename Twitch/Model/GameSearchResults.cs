@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Twitch.ViewModel;
 using Windows.Data.Json;
 
 namespace Twitch.Model
@@ -81,7 +82,7 @@ namespace Twitch.Model
         private const string scPrevString = "prev";
     }
 
-    public class Game
+    public class Game : IUniqueId
     {
         //----------------------------------------------------------------------
         public Game( JsonObject aJsonObject )
@@ -116,6 +117,15 @@ namespace Twitch.Model
         public string ImageUrl
         {
             get;
+        }
+
+        //----------------------------------------------------------------------
+        public string Key
+        {
+            get
+            {
+                return Name;
+            }
         }
 
         private const string scViewersString = "viewers";
