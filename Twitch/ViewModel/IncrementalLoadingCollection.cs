@@ -11,6 +11,7 @@ using Windows.UI.Xaml.Data;
 namespace Twitch.ViewModel
 {
     //==========================================================================
+    [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Design", "CA1063:ImplementIDisposableCorrectly" )]
     public class IncrementalLoadingCollection<I> : ObservableCollection<I>, ISupportIncrementalLoading, IDisposable where I : IUniqueId
     {
         //----------------------------------------------------------------------
@@ -37,6 +38,7 @@ namespace Twitch.ViewModel
         }
 
         //----------------------------------------------------------------------
+        [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Design", "CA1063:ImplementIDisposableCorrectly" )]
         public void Dispose()
         {
             mUpdateTimer.Stop();
@@ -44,7 +46,9 @@ namespace Twitch.ViewModel
         }
 
         //----------------------------------------------------------------------
+#pragma warning disable S3168 // "async" methods should not return "void"
         private async void HandleUpdateTimerTick( object sender, object e )
+#pragma warning restore S3168 // "async" methods should not return "void"
         {
             mUpdateTimer.Stop();
 
