@@ -27,9 +27,9 @@ namespace Twitch.ViewModel
         //----------------------------------------------------------------------
         public IncrementalLoadingCollection( Func<uint, uint, Task<IEnumerable<I>>> aLoadingFunction, TimeSpan aUpdateFrequency )
         {
+            mLoadingFunction = aLoadingFunction;
             if( aUpdateFrequency != TimeSpan.Zero )
             {
-                mLoadingFunction = aLoadingFunction;
                 mUpdateTimer.Interval = aUpdateFrequency;
                 mUpdateTimer.Tick += HandleUpdateTimerTick;
                 mUpdateTimer.Start();

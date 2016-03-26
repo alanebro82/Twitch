@@ -49,7 +49,7 @@ namespace Twitch.View
             var theStream = e.Parameter as Stream;
             if( theStream != null )
             {
-                ApplicationView.GetForCurrentView().Title = theStream.Channel.Name;
+                ApplicationView.GetForCurrentView().Title = $"{theStream.Channel.DisplayName}: {theStream.Channel.Status}";
             }
             await Vm.Play( e.Parameter as Stream );
         }
