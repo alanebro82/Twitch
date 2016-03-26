@@ -46,6 +46,11 @@ namespace Twitch.View
 
             mTimer.Start();
 
+            var theStream = e.Parameter as Stream;
+            if( theStream != null )
+            {
+                ApplicationView.GetForCurrentView().Title = theStream.Channel.Name;
+            }
             await Vm.Play( e.Parameter as Stream );
         }
 
@@ -61,6 +66,8 @@ namespace Twitch.View
             PointerMoved -= HandlePointerMoved;
 
             mTimer.Stop();
+
+            ApplicationView.GetForCurrentView().Title = String.Empty;
 
             // ensure mouse is visible
             ResetPointer();

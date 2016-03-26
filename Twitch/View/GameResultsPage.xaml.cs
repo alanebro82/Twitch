@@ -35,9 +35,9 @@ namespace Twitch.View
         //----------------------------------------------------------------------
         protected override void OnNavigatedTo( NavigationEventArgs e )
         {
+            base.OnNavigatedTo( e );
             SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
             Vm.Init();
-            base.OnNavigatedTo( e );
         }
 
         //----------------------------------------------------------------------
