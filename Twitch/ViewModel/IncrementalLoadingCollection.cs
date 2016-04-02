@@ -122,7 +122,14 @@ namespace Twitch.ViewModel
             {
                 for( int i = 0; i < theResults.Count(); ++i )
                 {
-                    this[i] = theResults.ElementAt( i );
+                    if( i < this.Count() )
+                    {
+                        this[i] = theResults.ElementAt( i );
+                    }
+                    else
+                    {
+                        Add( theResults.ElementAt( i ) );
+                    }
                 }
             }
 
