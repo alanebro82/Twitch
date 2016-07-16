@@ -33,6 +33,14 @@
                         <Image x:Name="mImage"
                                Source="{x:Bind ImageUrl, Mode=OneWay}"
                                Stretch="Uniform" />
+                        <TextBlock Foreground="Black"
+                                   FontWeight="Bold"
+                                   Margin="2,2,0,0"
+                                   FontSize="20"
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Top"
+                                   TextTrimming="CharacterEllipsis"
+                                   Text="{x:Bind Name, Mode=OneWay}" />
                         <TextBlock Foreground="White"
                                    FontWeight="Bold"
                                    FontSize="20"
@@ -40,6 +48,14 @@
                                    VerticalAlignment="Top"
                                    TextTrimming="CharacterEllipsis"
                                    Text="{x:Bind Name, Mode=OneWay}" />
+                        <TextBlock Foreground="Black"
+                                   Margin="2,2,0,0"
+                                   HorizontalAlignment="Right"
+                                   VerticalAlignment="Bottom"
+                                   TextTrimming="CharacterEllipsis">
+                            <Run Text="{x:Bind Viewers, Mode=OneWay}" />
+                            <Run Text=" viewers" />
+                        </TextBlock>
                         <TextBlock Foreground="White"
                                    HorizontalAlignment="Right"
                                    VerticalAlignment="Bottom"

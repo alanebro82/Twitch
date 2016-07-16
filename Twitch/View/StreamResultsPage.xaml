@@ -45,6 +45,14 @@
                         <Image x:Name="mImage"
                                Source="{x:Bind Preview, Mode=OneWay}"
                                Stretch="Uniform" />
+                        <TextBlock Foreground="Black"
+                                   FontWeight="Bold"
+                                   Margin="3,3,0,0"
+                                   FontSize="30"
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Top"
+                                   TextTrimming="CharacterEllipsis"
+                                   Text="{x:Bind Channel.DisplayName, Mode=OneWay}" />
                         <TextBlock Foreground="White"
                                    FontWeight="Bold"
                                    FontSize="30"
@@ -59,11 +67,27 @@
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
                             <TextBlock Grid.Column="0"
+                                       Foreground="Black"
+                                       Margin="2,2,0,0"
+                                       FontWeight="Bold"
+                                       FontSize="20"
+                                       TextTrimming="CharacterEllipsis"
+                                       Text="{x:Bind Channel.Status, Mode=OneWay}" />
+                            <TextBlock Grid.Column="0"
                                        Foreground="White"
                                        FontWeight="Bold"
                                        FontSize="20"
                                        TextTrimming="CharacterEllipsis"
                                        Text="{x:Bind Channel.Status, Mode=OneWay}" />
+
+                            <TextBlock Grid.Column="1"
+                                       Foreground="Black"
+                                       Margin="2,2,0,0"
+                                       TextTrimming="CharacterEllipsis"
+                                       VerticalAlignment="Bottom">
+                                <Run Text="{x:Bind Viewers, Mode=OneWay}" />
+                                <Run Text=" viewers" />
+                            </TextBlock>
                             <TextBlock Grid.Column="1"
                                        Foreground="White"
                                        TextTrimming="CharacterEllipsis"
